@@ -28,7 +28,7 @@
   <!-- Top Announcement Bar -->
   <div class="bg-drab-dark text-stone-300 border-b border-stone-800 text-xs py-2.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
     <i data-lucide="shield-check" class="w-4 h-4 text-coyote"></i>
-    <span>Proudly Veteran Owned & Operated &bull; Precision 3D & Laser Fabrication</span>
+    <span>Proudly Veteran Owned &amp; Operated &bull; Precision 3D &amp; Laser Fabrication</span>
   </div>
 
   <!-- Header Navigation -->
@@ -46,9 +46,9 @@
 
       <!-- Category Filter Links -->
       <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide text-stone-400">
-        <button onclick="filterCatalog('awards')" class="hover:text-coyote transition">Military & PCS Awards</button>
+        <button onclick="filterCatalog('awards')" class="hover:text-coyote transition">Military &amp; PCS Awards</button>
         <button onclick="filterCatalog('frames')" class="hover:text-coyote transition">Hunt Memory Photos</button>
-        <button onclick="filterCatalog('functional')" class="hover:text-coyote transition">Field Gear & 3D Prints</button>
+        <button onclick="filterCatalog('functional')" class="hover:text-coyote transition">Field Gear &amp; 3D Prints</button>
       </nav>
 
       <!-- Action Buttons -->
@@ -79,7 +79,7 @@
     </div>
 
     <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase max-w-3xl mx-auto leading-tight">
-      Custom Made Hunt Gear & <br class="hidden sm:block" />
+      Custom Made Hunt Gear &amp; <br class="hidden sm:block" />
       <span class="text-stone-400 font-light">Custom Designed Commemorations</span>
     </h1>
 
@@ -94,9 +94,9 @@
     <!-- Filter Buttons -->
     <div class="flex flex-wrap gap-2 justify-center mb-10" id="filter-buttons">
       <button onclick="filterCatalog('all')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-coyote text-slatecharcoal transition">All Products</button>
-      <button onclick="filterCatalog('awards')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">PCS & Military Awards</button>
+      <button onclick="filterCatalog('awards')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">PCS &amp; Military Awards</button>
       <button onclick="filterCatalog('frames')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">Hunt Memory Photos</button>
-      <button onclick="filterCatalog('functional')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">Field Gear & 3D Prints</button>
+      <button onclick="filterCatalog('functional')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">Field Gear &amp; 3D Prints</button>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
@@ -169,7 +169,7 @@
           <img src="logo.png" alt="Deer Camp Designs" class="h-10 w-auto object-contain opacity-90" />
           <div>
             <span class="font-bold text-stone-200 block text-base leading-none">Deer Camp Designs</span>
-            <span class="text-[10px] text-coyote tracking-widest uppercase font-semibold">Custom Fabrication & Design</span>
+            <span class="text-[10px] text-coyote tracking-widest uppercase font-semibold">Custom Fabrication &amp; Design</span>
           </div>
         </div>
         <div class="flex items-center gap-3 text-xs">
@@ -182,7 +182,7 @@
       <!-- Returns Disclaimer Footer Banner -->
       <div class="bg-stone-900/60 border border-stone-800/80 rounded-xl p-4 text-xs text-stone-400 leading-relaxed">
         <p class="font-bold text-stone-200 mb-1 flex items-center gap-2 text-xs uppercase tracking-wider text-coyote">
-          <i data-lucide="shield-alert" class="w-4 h-4"></i> Returns & Quality Guarantee
+          <i data-lucide="shield-alert" class="w-4 h-4"></i> Returns &amp; Quality Guarantee
         </p>
         <p>
           Because these products are custom made for each customer, we do not accept returns or exchanges unless: 
@@ -192,13 +192,74 @@
         </p>
       </div>
 
+      <!-- Legal Modal Buttons -->
+      <div class="flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-6 text-xs text-stone-500 pt-2">
+        <button type="button" onclick="openModal('privacy-modal')" class="hover:text-coyote transition underline underline-offset-4">Privacy Policy</button>
+        <button type="button" onclick="openModal('terms-modal')" class="hover:text-coyote transition underline underline-offset-4">Terms of Service</button>
+        <button type="button" onclick="openModal('disclaimer-modal')" class="hover:text-coyote transition underline underline-offset-4">Gear &amp; Trademark Disclaimer</button>
+      </div>
+
       <!-- Bottom Copyright -->
-      <div class="text-center text-xs text-stone-600">
+      <div class="text-center sm:text-left text-xs text-stone-600">
         <p>&copy; 2026 Deer Camp Designs. All rights reserved. &bull; Proudly Veteran Owned &bull; Encrypted Stripe Checkout</p>
       </div>
 
     </div>
   </footer>
+
+  <!-- Embedded Legal Modals -->
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacy-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
+          <i data-lucide="shield" class="w-4 h-4 text-coyote"></i> Privacy Policy
+        </h3>
+        <button type="button" onclick="closeModal('privacy-modal')" class="text-stone-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-4 text-xs text-stone-300 leading-relaxed">
+        <p><strong>Effective Date:</strong> 2026</p>
+        <p>Deer Camp Designs values your privacy. We collect customer information (such as name, email address, shipping destination, and personalized customization instructions) exclusively to design, fabricate, and deliver your orders.</p>
+        <p><strong>Payment Processing:</strong> We do not store, view, or process payment card details on our servers. All transactions are securely handled by Stripe with end-to-end encryption.</p>
+        <p><strong>Data Sharing:</strong> We do not sell, rent, or trade your personal data. Data is shared solely with necessary fulfillment providers (such as shipping carriers and Stripe for payment handling).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms of Service Modal -->
+  <div id="terms-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
+          <i data-lucide="file-text" class="w-4 h-4 text-coyote"></i> Terms of Service &amp; Custom Fabrication
+        </h3>
+        <button type="button" onclick="closeModal('terms-modal')" class="text-stone-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-4 text-xs text-stone-300 leading-relaxed">
+        <p><strong>1. Custom Orders:</strong> Custom engraving and 3D printing begins after checkout is completed. Customers are responsible for verifying the accuracy of custom names, ranks, and unit designations submitted at the time of order.</p>
+        <p><strong>2. Fabrication &amp; Lead Times:</strong> Custom items require precision fabrication and curing/finishing time. Estimated delivery times may vary based on order volume and material availability.</p>
+        <p><strong>3. Intellectual Property:</strong> All custom 3D models, digital layout designs, and photographic assets created by Deer Camp Designs remain the intellectual property of Deer Camp Designs.</p>
+        <p><strong>4. Governing Law:</strong> These terms are governed by the laws of the State of Texas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gear & Trademark Disclaimer Modal -->
+  <div id="disclaimer-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-coyote"></i> Equipment &amp; Trademark Disclaimer
+        </h3>
+        <button type="button" onclick="closeModal('disclaimer-modal')" class="text-stone-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="p-6 overflow-y-auto space-y-4 text-xs text-stone-300 leading-relaxed">
+        <p><strong>Trademark Notice:</strong> Any third-party brand names, models, or trademarks referenced on this site (including but not limited to Mathews, Lift, Lift X, Sig Sauer, Ford, etc.) are the property of their respective trademark holders. Reference to these trademarks is solely to indicate aftermarket compatibility. Deer Camp Designs is an independent fabrication studio and is not affiliated with, endorsed by, or sponsored by these companies.</p>
+        <p><strong>Installation &amp; Equipment Safety:</strong> Users are responsible for inspecting equipment, ensuring snug fitment, and verifying secure mounting before operating vehicles or handling archery and outdoor gear. Deer Camp Designs assumes no liability for damages resulting from improper installation, extreme vehicle cabin thermal exposure beyond material thresholds, or equipment misuse.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- Store Logic & Cart Management -->
   <script>
@@ -356,6 +417,14 @@
 
     function toggleCart() {
       document.getElementById("cart-drawer").classList.toggle("hidden");
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.remove('hidden');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
     }
 
     function showToast(msg) {
