@@ -52,16 +52,11 @@
       </nav>
 
       <!-- Action Buttons -->
-      <div class="flex items-center gap-2.5">
-        <!-- Direct Email Button -->
-        <a href="mailto:deercampdesigns@outlook.com?subject=Custom%20Order%20Inquiry%20-%20Deer%20Camp%20Designs" class="hidden lg:flex items-center gap-1.5 text-xs uppercase tracking-wider font-bold bg-stone-900 border border-stone-800 text-stone-300 px-3 py-2 rounded-lg hover:border-coyote hover:text-coyote transition">
-          <i data-lucide="mail" class="w-4 h-4 text-coyote"></i> Email Us
+      <div class="flex items-center gap-3">
+        <!-- Direct Email Link -->
+        <a href="mailto:deercampdesigns@outlook.com?subject=Custom%20Order%20Inquiry%20-%20Deer%20Camp%20Designs" onclick="copyEmailFallback(event)" class="flex items-center gap-2 text-xs uppercase tracking-wider font-bold bg-stone-900 border border-coyote/40 text-coyote px-3.5 py-2 rounded-lg hover:bg-coyote hover:text-slatecharcoal transition">
+          <i data-lucide="mail" class="w-4 h-4"></i> Contact Us
         </a>
-
-        <!-- Live Chat Button -->
-        <button onclick="toggleChatWindow()" class="hidden sm:flex items-center gap-1.5 text-xs uppercase tracking-wider font-bold bg-stone-900 border border-coyote/40 text-coyote px-3 py-2 rounded-lg hover:bg-coyote hover:text-slatecharcoal transition">
-          <i data-lucide="message-circle" class="w-4 h-4"></i> Live Chat
-        </button>
 
         <!-- Cart Button -->
         <button onclick="toggleCart()" class="relative p-2.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-coyote/50 transition flex items-center gap-2 group">
@@ -89,7 +84,7 @@
     </h1>
 
     <p class="mt-4 max-w-2xl mx-auto text-stone-400 text-base sm:text-lg leading-relaxed">
-      Custom hybrid 3D-printed and precision laser-engraved awards, Wood material outdoor memory photos, and rugged outdoor functional equipment.
+      Custom hybrid 3D-printed and precision laser-engraved awards, solid wood outdoor memory photos, and rugged outdoor functional equipment.
     </p>
   </section>
 
@@ -101,61 +96,13 @@
       <button onclick="filterCatalog('all')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-coyote text-slatecharcoal transition">All Products</button>
       <button onclick="filterCatalog('awards')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">PCS & Military Awards</button>
       <button onclick="filterCatalog('frames')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">Hunt Memory Photos</button>
-      <button onclick="filterCatalog('functional')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">Functional 3D Prints</button>
+      <button onclick="filterCatalog('functional')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">Field Gear & 3D Prints</button>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
       <!-- Dynamic Products injected via JS -->
     </div>
   </main>
-
-  <!-- Floating Chat Trigger Button -->
-  <div class="fixed bottom-6 right-6 z-40">
-    <button onclick="toggleChatWindow()" class="bg-coyote hover:bg-coyote-dark text-slatecharcoal font-black p-4 rounded-full shadow-2xl flex items-center gap-2 border-2 border-stone-900 hover:scale-105 transition">
-      <i data-lucide="message-circle" class="w-6 h-6"></i>
-      <span class="text-xs uppercase tracking-wider font-bold hidden sm:inline">Chat With Us</span>
-    </button>
-  </div>
-
-  <!-- Interactive Live Chat Window -->
-  <div id="chat-window" class="fixed bottom-24 right-6 z-50 w-[90vw] max-w-sm bg-stone-900 border border-stone-800 rounded-2xl shadow-2xl hidden flex flex-col overflow-hidden">
-    <!-- Chat Header -->
-    <div class="bg-stone-950 p-4 border-b border-stone-800 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="relative">
-          <img src="logo.png" alt="Deer Camp Designs" class="w-9 h-9 object-contain bg-stone-900 rounded-full border border-stone-700 p-0.5" />
-          <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-stone-950"></span>
-        </div>
-        <div>
-          <h3 class="text-sm font-bold text-white leading-none">Deer Camp Designs</h3>
-          <p class="text-[10px] text-coyote font-semibold mt-1 flex items-center gap-1">
-            <i data-lucide="clock" class="w-3 h-3"></i> Live: 9:00 AM – 4:00 PM CST
-          </p>
-        </div>
-      </div>
-      <button onclick="toggleChatWindow()" class="text-stone-400 hover:text-white transition">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-    </div>
-
-    <!-- Chat Messages Stream -->
-    <div id="chat-messages" class="p-4 h-72 overflow-y-auto space-y-3 bg-slatecharcoal text-xs">
-      <div class="flex flex-col items-start">
-        <div class="bg-stone-800 text-stone-200 px-3.5 py-2.5 rounded-xl rounded-tl-none max-w-[90%] leading-relaxed border border-stone-700/50">
-          Hey there! We are live for chat from <strong class="text-coyote">9:00 AM to 4:00 PM CST</strong>. Have questions about custom PCS plaques, hunt memory photos, or custom 3D mounts? Drop your message below or email us directly at <a href="mailto:deercampdesigns@outlook.com" class="text-coyote underline">deercampdesigns@outlook.com</a>.
-        </div>
-        <span class="text-[9px] text-stone-500 mt-1 pl-1">Deer Camp Support</span>
-      </div>
-    </div>
-
-    <!-- Chat Input Area -->
-    <form onsubmit="sendMessage(event)" class="p-3 bg-stone-950 border-t border-stone-800 flex items-center gap-2">
-      <input type="text" id="chat-input" placeholder="Type a message..." required class="flex-grow bg-stone-900 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote placeholder-stone-500" />
-      <button type="submit" class="bg-coyote hover:bg-coyote-dark text-slatecharcoal p-2 rounded-lg font-bold transition">
-        <i data-lucide="send" class="w-4 h-4"></i>
-      </button>
-    </form>
-  </div>
 
   <!-- Slide-out Cart Drawer -->
   <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
@@ -206,6 +153,12 @@
     </div>
   </div>
 
+  <!-- Toast Notification Container -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-coyote/50 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
+    <i data-lucide="check-circle" class="w-4 h-4 text-coyote"></i>
+    <span id="toast-message">Email address copied to clipboard!</span>
+  </div>
+
   <!-- Footer -->
   <footer class="border-t border-stone-800/80 bg-stone-950 py-12 text-stone-400 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -219,12 +172,10 @@
             <span class="text-[10px] text-coyote tracking-widest uppercase font-semibold">Custom Fabrication & Design</span>
           </div>
         </div>
-        <div class="flex flex-col sm:flex-row items-center gap-4 text-xs text-stone-500">
-          <a href="mailto:deercampdesigns@outlook.com" class="hover:text-coyote text-stone-400 font-medium transition flex items-center gap-1.5">
+        <div class="flex items-center gap-3 text-xs">
+          <a href="mailto:deercampdesigns@outlook.com?subject=Custom%20Order%20Inquiry%20-%20Deer%20Camp%20Designs" onclick="copyEmailFallback(event)" class="hover:text-coyote text-stone-300 font-medium transition flex items-center gap-1.5 bg-stone-900 border border-stone-800 px-3 py-1.5 rounded-lg">
             <i data-lucide="mail" class="w-3.5 h-3.5 text-coyote"></i> deercampdesigns@outlook.com
           </a>
-          <span class="hidden sm:inline">&bull;</span>
-          <span>Live Chat: 9:00 AM – 4:00 PM CST</span>
         </div>
       </div>
 
@@ -251,7 +202,6 @@
 
   <!-- Store Logic & Cart Management -->
   <script>
-    // Set soldOut: true on any product to mark it unavailable
     const products = [
       {
         id: "prod_pcs_plaque_01",
@@ -259,7 +209,7 @@
         name: "PCS / Retirement Award",
         price: 49.99,
         badge: "Hybrid 3D with Maple Plywood and Acrylic",
-        soldOut: true, // <-- Change to true to mark sold out
+        soldOut: false,
         customizable: true,
         customPrompt: "Enter Unit, Rank, Name, Service Dates, or Custom Inscription:",
         description: "Custom military presentation plaque featuring 3D printed Framing with laser-engraved rank, service dates, and personalized paragraph options.",
@@ -271,7 +221,7 @@
         category: "frames",
         price: 49.99,
         badge: "Customized Maple Plywood / Laser Cut and Engraved",
-        soldOut: true, // <-- Change to true to mark sold out
+        soldOut: false,
         customizable: true,
         customPrompt: "Enter Harvest Location, Hunter Name, and Date:, and email your photo that will be engraved",
         description: "Custom 10x8 inch frame laser cut and engraved to preserve the memory of the hunt.",
@@ -283,9 +233,11 @@
         category: "functional",
         price: 19.99,
         badge: "3D Printed Magnetic Range Finder Mount",
-        soldOut: true, // <-- Change to true to mark sold out
+        soldOut: false,
+        hasColors: true,
+        colors: ["Black", "Tan", "Brown"],
         customizable: true,
-        customPrompt: "Enter Harvest Location, Season/Year, or Custom Text:",
+        customPrompt: "Enter Harvest Location, Season/Year, or Custom Text (Optional):",
         description: "Get easier access to your range finder with this magnetized adapter.",
         icon: "crosshair"
       },
@@ -295,7 +247,9 @@
         category: "functional",
         price: 15.99,
         badge: "3D Printed Bow Holder",
-        soldOut: true, // <-- Change to true to mark sold out
+        soldOut: false,
+        hasColors: true,
+        colors: ["Black", "Tan", "Brown"],
         customizable: false,
         description: "Transport your Matthews Lift and Lift X Models easily with this 3D printed bow holder that attaches to your headrest.",
         icon: "compass"
@@ -306,7 +260,9 @@
         category: "functional",
         price: 25.99,
         badge: "Custom 3D Print",
-        soldOut: true, // <-- Change to true to mark sold out
+        soldOut: false,
+        hasColors: true,
+        colors: ["Black", "Tan", "Brown"],
         customizable: false,
         description: "Attach your pistol, knives and other accessories for easy access right behind your bino harness.",
         icon: "layers"
@@ -347,8 +303,19 @@
             <h3 class="text-xl font-bold text-white mt-3">${p.name}</h3>
             <p class="text-sm text-stone-400 mt-2 leading-relaxed">${p.description}</p>
 
-            ${(p.customizable && !p.soldOut) ? `
+            ${(p.hasColors && !p.soldOut) ? `
               <div class="mt-4 pt-3 border-t border-stone-800">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-coyote mb-1">
+                  Select Color:
+                </label>
+                <select id="color-${p.id}" class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote">
+                  ${p.colors.map(color => `<option value="${color}">${color}</option>`).join('')}
+                </select>
+              </div>
+            ` : ''}
+
+            ${(p.customizable && !p.soldOut) ? `
+              <div class="mt-3 pt-3 border-t border-stone-800">
                 <label class="block text-[11px] font-bold uppercase tracking-wider text-coyote mb-1">
                   ${p.customPrompt}
                 </label>
@@ -392,41 +359,19 @@
       document.getElementById("cart-drawer").classList.toggle("hidden");
     }
 
-    function toggleChatWindow() {
-      document.getElementById("chat-window").classList.toggle("hidden");
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      const toastMsg = document.getElementById("toast-message");
+      toastMsg.innerText = msg;
+      toast.classList.remove("opacity-0", "pointer-events-none");
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "pointer-events-none");
+      }, 3000);
     }
 
-    function sendMessage(e) {
-      e.preventDefault();
-      const input = document.getElementById("chat-input");
-      const msg = input.value.trim();
-      if (!msg) return;
-
-      const container = document.getElementById("chat-messages");
-
-      container.innerHTML += `
-        <div class="flex flex-col items-end">
-          <div class="bg-coyote text-slatecharcoal font-semibold px-3.5 py-2 rounded-xl rounded-tr-none max-w-[85%] leading-relaxed">
-            ${msg}
-          </div>
-          <span class="text-[9px] text-stone-500 mt-1 pr-1">You</span>
-        </div>
-      `;
-
-      input.value = "";
-      container.scrollTop = container.scrollHeight;
-
-      setTimeout(() => {
-        container.innerHTML += `
-          <div class="flex flex-col items-start">
-            <div class="bg-stone-800 text-stone-200 px-3.5 py-2.5 rounded-xl rounded-tl-none max-w-[85%] leading-relaxed border border-stone-700/50">
-              Thanks for reaching out! Live chat hours are <strong class="text-coyote">9:00 AM – 4:00 PM CST</strong>. Please leave your contact details or email <a href="mailto:deercampdesigns@outlook.com" class="text-coyote underline">deercampdesigns@outlook.com</a> and we will get back to you!
-            </div>
-            <span class="text-[9px] text-stone-500 mt-1 pl-1">Deer Camp Support</span>
-          </div>
-        `;
-        container.scrollTop = container.scrollHeight;
-      }, 1000);
+    function copyEmailFallback(e) {
+      navigator.clipboard.writeText("deercampdesigns@outlook.com");
+      showToast("Email address copied: deercampdesigns@outlook.com");
     }
 
     function addToCart(productId) {
@@ -442,11 +387,29 @@
         }
       }
 
-      const existing = cart.find(c => c.id === productId && c.customNote === customNote);
+      let selectedColor = "";
+      if (item.hasColors) {
+        const colorEl = document.getElementById(`color-${productId}`);
+        if (colorEl) {
+          selectedColor = colorEl.value;
+        }
+      }
+
+      const existing = cart.find(c => 
+        c.id === productId && 
+        c.customNote === customNote && 
+        c.selectedColor === selectedColor
+      );
+
       if (existing) {
         existing.qty += 1;
       } else {
-        cart.push({ ...item, qty: 1, customNote: customNote });
+        cart.push({ 
+          ...item, 
+          qty: 1, 
+          customNote: customNote,
+          selectedColor: selectedColor 
+        });
       }
       updateCartUI();
       toggleCart();
@@ -472,7 +435,8 @@
         <div class="py-3 flex justify-between items-start">
           <div class="pr-2">
             <p class="text-sm font-bold text-stone-200">${item.name}</p>
-            ${item.customNote ? `<p class="text-xs text-coyote mt-0.5 italic">Note: "${item.customNote}"</p>` : ''}
+            ${item.selectedColor ? `<p class="text-xs text-coyote mt-0.5 font-medium">Color: ${item.selectedColor}</p>` : ''}
+            ${item.customNote ? `<p class="text-xs text-stone-400 mt-0.5 italic">Inscription: "${item.customNote}"</p>` : ''}
             <p class="text-xs text-stone-500 mt-0.5">$${item.price.toFixed(2)} × ${item.qty}</p>
           </div>
           <span class="text-sm font-bold text-coyote">$${(item.price * item.qty).toFixed(2)}</span>
