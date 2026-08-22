@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -44,7 +43,7 @@ app.post('/create-checkout-session', async (req, res) => {
       },
       shipping_options: [
         {
-          shipping_rate: 'shr_1U7NWi3z3vaDR2XeNJuvYJut', // Standard Tracked Ground $8.95
+          shipping_rate: 'shr_1U7NWi3z3vaDR2XeNJuvYJut', // Standard $8.95
         },
         {
           shipping_rate: 'shr_1U7NKu3z3vaDR2Xex3a7utMi', // Free Local Pickup $0.00
