@@ -142,7 +142,7 @@
         </div>
 
         <!-- Right: Configurations & Direct Payment Area -->
-        <div class="flex flex-col justify-between space-y-6">
+        <div class="flex flex-col justify-between space-y-5">
           <div class="space-y-4">
             <div>
               <span id="modal-product-price" class="text-3xl font-black text-white">$0.00</span>
@@ -169,17 +169,31 @@
               <textarea id="modal-custom-input" rows="2" placeholder="Type custom details here..." class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote placeholder-stone-600 resize-none"></textarea>
             </div>
 
-            <!-- Pickup and Shipping Information Notice -->
-            <div class="bg-stone-950/80 border border-stone-800 rounded-lg p-3 text-[11px] text-stone-400 space-y-1.5">
-              <div class="flex items-center gap-1.5 text-coyote font-bold">
-                <i data-lucide="truck" class="w-3.5 h-3.5"></i> Tracked Shipping or Free Local Pickup
+            <!-- Delivery / Pickup Choice Selector -->
+            <div class="pt-3 border-t border-stone-800">
+              <label class="block text-xs font-bold uppercase tracking-wider text-coyote mb-2">
+                Fulfillment Method:
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center gap-2 p-2.5 rounded-lg border border-stone-800 bg-stone-950 cursor-pointer hover:border-stone-700 transition">
+                  <input type="radio" name="modal_fulfillment" value="shipping" checked class="accent-coyote" />
+                  <span class="text-xs font-semibold text-stone-200">Tracked Shipping <span class="text-[10px] text-stone-400 block font-normal">+$5.99</span></span>
+                </label>
+                <label class="flex items-center gap-2 p-2.5 rounded-lg border border-coyote/40 bg-stone-950 cursor-pointer hover:border-coyote transition">
+                  <input type="radio" name="modal_fulfillment" value="pickup" class="accent-coyote" />
+                  <span class="text-xs font-semibold text-coyote">Free Local Pickup <span class="text-[10px] text-stone-400 block font-normal">$0.00 / Midland-Odessa</span></span>
+                </label>
               </div>
-              <p>Choose between standard shipping or <strong>Free Local Pickup / Drop-off ($0.00)</strong> at checkout.</p>
+            </div>
+
+            <!-- Fabrication Policy Note -->
+            <div class="bg-stone-950/80 border border-stone-800 rounded-lg p-3 text-[11px] text-stone-400 leading-relaxed">
+              <span class="text-stone-300 font-semibold">Custom Order Policy:</span> Custom fabricated on demand. No returns unless damaged upon delivery or lettering error.
             </div>
           </div>
 
           <!-- Checkout Actions -->
-          <div class="space-y-2 pt-4 border-t border-stone-800">
+          <div class="space-y-2 pt-3 border-t border-stone-800">
             <button id="modal-buy-now-btn" onclick="directBuyNow()" class="w-full bg-coyote hover:bg-coyote-dark text-slatecharcoal font-black uppercase tracking-wider py-3.5 px-4 rounded-lg shadow-lg transition flex justify-center items-center gap-2">
               <i data-lucide="credit-card" class="w-4 h-4"></i> Proceed to Secure Checkout
             </button>
@@ -209,20 +223,36 @@
               <i data-lucide="x" class="w-6 h-6"></i>
             </button>
           </div>
-          <div id="cart-items" class="divide-y border-b border-stone-800 border-t my-4 overflow-y-auto max-h-[42vh]">
+          <div id="cart-items" class="divide-y border-b border-stone-800 border-t my-4 overflow-y-auto max-h-[36vh]">
             <!-- Cart Items -->
           </div>
         </div>
 
         <div class="border-t border-stone-800 pt-4">
-          <div class="flex justify-between text-base font-semibold text-white mb-1">
+          <div class="flex justify-between text-base font-semibold text-white mb-3">
             <span>Subtotal</span>
             <span id="cart-subtotal" class="text-coyote font-bold">$0.00</span>
           </div>
-          
-          <div class="bg-stone-950 border border-stone-800 rounded-lg p-2.5 mb-3 text-[11px] text-stone-400 flex items-start gap-2">
-            <i data-lucide="map-pin" class="w-4 h-4 text-coyote shrink-0 mt-0.5"></i>
-            <span>Select <strong>Tracked Shipping</strong> or <strong>Free Local Pickup / Drop-off</strong> on the next screen.</span>
+
+          <!-- Cart Fulfillment Method Radio Buttons -->
+          <div class="bg-stone-950 border border-stone-800 rounded-xl p-3 mb-3 space-y-2">
+            <span class="text-[11px] font-bold text-stone-300 uppercase tracking-wider block">Choose Delivery:</span>
+            <div class="flex flex-col gap-1.5">
+              <label class="flex items-center justify-between text-xs text-stone-300 p-2 rounded-lg bg-stone-900/80 cursor-pointer">
+                <div class="flex items-center gap-2">
+                  <input type="radio" name="cart_fulfillment" value="shipping" checked onchange="updateCartUI()" class="accent-coyote" />
+                  <span>Standard Tracked Shipping</span>
+                </div>
+                <span class="font-bold text-stone-400">+$5.99</span>
+              </label>
+              <label class="flex items-center justify-between text-xs text-coyote p-2 rounded-lg bg-stone-900/80 cursor-pointer">
+                <div class="flex items-center gap-2">
+                  <input type="radio" name="cart_fulfillment" value="pickup" onchange="updateCartUI()" class="accent-coyote" />
+                  <span>Free Local Pickup / Drop-off</span>
+                </div>
+                <span class="font-bold text-coyote">$0.00</span>
+              </label>
+            </div>
           </div>
 
           <!-- Custom Orders Returns & Exchanges Policy Disclaimer -->
@@ -404,7 +434,7 @@
         category: "functional",
         price: 15.99,
         badge: "3D Printed Bow Holder",
-        images: ["bow-holder.jpg"], // Properly wrapped in array brackets
+        images: ["bow-holder.jpg"],
         icon: "compass",
         soldOut: false,
         hasColors: true,
@@ -629,6 +659,9 @@
 
       const customNote = currentModalProduct.customizable ? document.getElementById("modal-custom-input").value.trim() : "";
       const selectedColor = currentModalProduct.hasColors ? document.getElementById("modal-selected-color").value : "";
+      
+      const fulfillmentRadio = document.querySelector('input[name="modal_fulfillment"]:checked');
+      const fulfillmentMethod = fulfillmentRadio ? fulfillmentRadio.value : 'shipping';
 
       const buyBtn = document.getElementById("modal-buy-now-btn");
       buyBtn.innerText = "Connecting to Stripe...";
@@ -645,7 +678,10 @@
         const response = await fetch('/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: singleItemOrder })
+          body: JSON.stringify({ 
+            items: singleItemOrder,
+            fulfillmentMethod: fulfillmentMethod 
+          })
         });
 
         const session = await response.json();
@@ -739,6 +775,9 @@
         return;
       }
 
+      const fulfillmentRadio = document.querySelector('input[name="cart_fulfillment"]:checked');
+      const fulfillmentMethod = fulfillmentRadio ? fulfillmentRadio.value : 'shipping';
+
       const checkoutBtn = document.getElementById("checkout-btn");
       checkoutBtn.innerText = "Connecting to Stripe...";
       checkoutBtn.disabled = true;
@@ -747,7 +786,10 @@
         const response = await fetch('/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: cart })
+          body: JSON.stringify({ 
+            items: cart,
+            fulfillmentMethod: fulfillmentMethod
+          })
         });
 
         const session = await response.json();

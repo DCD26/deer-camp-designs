@@ -9,10 +9,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '')));
 
-// Route to create a Stripe Checkout Session
 app.post('/create-checkout-session', async (req, res) => {
   try {
-    const { items } = req.body;
+    const { items, fulfillmentMethod } = req.body;
 
     const line_items = items.map(item => {
       const details = [];
@@ -32,50 +31,53 @@ app.post('/create-checkout-session', async (req, res) => {
       };
     });
 
-    const session = await stripe.checkout.sessions.create({
+    // Add Standard Tracked Shipping line item if customer did not choose Free Local Pickup
+    if (fulfillmentMethod === 'shipping') {
+      line_items.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'Standard Tracked Shipping (USPS/UPS)',
+            description: 'Insured tracking included',
+          },
+          unit_amount: 599, // $5.99 Standard Shipping
+        },
+        quantity: 1,
+      });
+    } else {
+      // Local pickup line item at $0.00
+      line_items.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'Local Pickup / Free Drop-off',
+            description: 'Free local collection/delivery (Midland/Odessa area)',
+          },
+          unit_amount: 0,
+        },
+        quantity: 1,
+      });
+    }
+
+    const sessionParams = {
       payment_method_types: ['card'],
       line_items: line_items,
       mode: 'payment',
-      allow_promotion_codes: true, // Enables coupons & promo codes
+      allow_promotion_codes: true,
       automatic_tax: { enabled: true },
       billing_address_collection: 'required',
-      shipping_address_collection: {
-        allowed_countries: ['US'],
-      },
-      shipping_options: [
-        {
-          shipping_rate_data: {
-            type: 'fixed_amount',
-            fixed_amount: {
-              amount: 599, // $5.99 Standard Tracked Shipping
-              currency: 'usd',
-            },
-            display_name: 'Standard Tracked Shipping',
-            delivery_estimate: {
-              minimum: { unit: 'business_day', value: 3 },
-              maximum: { unit: 'business_day', value: 5 },
-            },
-          },
-        },
-        {
-          shipping_rate_data: {
-            type: 'fixed_amount',
-            fixed_amount: {
-              amount: 0, // $0.00 Free Pickup
-              currency: 'usd',
-            },
-            display_name: 'Local Pickup / Free Drop-off',
-            delivery_estimate: {
-              minimum: { unit: 'business_day', value: 1 },
-              maximum: { unit: 'business_day', value: 3 },
-            },
-          },
-        },
-      ],
       success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/?canceled=true`,
-    });
+    };
 
+    // If shipping is required, collect delivery address
+    if (fulfillmentMethod === 'shipping') {
+      sessionParams.shipping_address_collection = {
+        allowed_countries: ['US'],
+      };
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
     res.json({ url: session.url });
   } catch (error) {
     console.error('Error creating checkout session:', error);
@@ -83,7 +85,6 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-// Fallback to index.html for root path
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
