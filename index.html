@@ -271,9 +271,11 @@
         price: 49.99,
         badge: "Hybrid 3D with Maple Plywood and Acrylic",
         soldOut: true,
+        images: ["award-plaque-1.jpg", "award-plaque-2.jpg"],
+        currentImageIndex: 0,
         customizable: true,
         customPrompt: "Enter Unit, Rank, Name, Service Dates, or Custom Inscription:",
-        description: "Custom military presentation plaque featuring 3D printed Framing with laser-engraved rank, service dates, and personalized paragraph options.",
+        description: "Custom military presentation plaque featuring 3D printed framing with laser-engraved rank, service dates, and personalized paragraph options.",
         icon: "shield"
       },
       {
@@ -283,6 +285,8 @@
         price: 49.99,
         badge: "Customized Maple Plywood / Laser Cut and Engraved",
         soldOut: true,
+        images: ["hunt-frame.jpg"],
+        currentImageIndex: 0,
         customizable: true,
         customPrompt: "Enter Harvest Location, Hunter Name, and Date: please email your photo that will be engraved",
         description: "Custom 10x8 inch frame laser cut and engraved to preserve the memory of the hunt.",
@@ -295,6 +299,8 @@
         price: 19.99,
         badge: "3D Printed Magnetic Range Finder Mount",
         soldOut: true,
+        images: ["rangefinder-mount.jpg"],
+        currentImageIndex: 0,
         hasColors: true,
         colors: ["Black", "Tan", "Brown"],
         customizable: true,
@@ -308,6 +314,8 @@
         price: 15.99,
         badge: "3D Printed Bow Holder",
         soldOut: true,
+        images: ["bow-holder.jpg"],
+        currentImageIndex: 0,
         hasColors: true,
         colors: ["Black", "Tan", "Brown"],
         customizable: false,
@@ -321,6 +329,8 @@
         price: 25.99,
         badge: "Custom 3D Print",
         soldOut: true,
+        images: ["gear-plate.jpg"],
+        currentImageIndex: 0,
         hasColors: true,
         colors: ["Black", "Tan", "Brown"],
         customizable: false,
@@ -332,22 +342,54 @@
     let cart = [];
     let activeFilter = 'all';
 
+    function switchProductImage(productId, step) {
+      const p = products.find(prod => prod.id === productId);
+      if (!p || !p.images || p.images.length <= 1) return;
+
+      p.currentImageIndex = (p.currentImageIndex + step + p.images.length) % p.images.length;
+      const imgEl = document.getElementById(`img-${productId}`);
+      if (imgEl) {
+        imgEl.src = p.images[p.currentImageIndex];
+      }
+    }
+
     function renderProducts() {
       const grid = document.getElementById("product-grid");
       const filtered = activeFilter === 'all' 
         ? products 
         : products.filter(p => p.category === activeFilter);
 
-      grid.innerHTML = filtered.map(p => `
+      grid.innerHTML = filtered.map(p => {
+        const activeImg = (p.images && p.images.length > 0) ? p.images[p.currentImageIndex || 0] : null;
+        const hasMultiple = p.images && p.images.length > 1;
+
+        return `
         <div class="bg-stone-900/60 border ${p.soldOut ? 'border-stone-800/50 opacity-75' : 'border-stone-800/90 hover:border-coyote/40'} rounded-xl p-6 flex flex-col justify-between transition shadow-xl group relative">
           <div>
-            <div class="w-full h-48 bg-stone-950/80 rounded-lg mb-5 flex flex-col items-center justify-center border border-stone-800/80 group-hover:border-stone-700 transition relative overflow-hidden">
-              <i data-lucide="${p.icon}" class="w-14 h-14 ${p.soldOut ? 'text-stone-600' : 'text-coyote opacity-80'} mb-2"></i>
-              <span class="text-[11px] uppercase tracking-widest font-black text-stone-500">${p.category}</span>
+            <div class="w-full h-60 bg-stone-950/80 rounded-lg mb-5 flex flex-col items-center justify-center border border-stone-800/80 group-hover:border-stone-700 transition relative overflow-hidden">
+              ${activeImg ? `
+                <img id="img-${p.id}" src="${activeImg}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${p.soldOut ? 'grayscale contrast-75' : ''}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="hidden flex-col items-center justify-center w-full h-full">
+                  <i data-lucide="${p.icon}" class="w-14 h-14 ${p.soldOut ? 'text-stone-600' : 'text-coyote opacity-80'} mb-2"></i>
+                  <span class="text-[11px] uppercase tracking-widest font-black text-stone-500">${p.category}</span>
+                </div>
+              ` : `
+                <i data-lucide="${p.icon}" class="w-14 h-14 ${p.soldOut ? 'text-stone-600' : 'text-coyote opacity-80'} mb-2"></i>
+                <span class="text-[11px] uppercase tracking-widest font-black text-stone-500">${p.category}</span>
+              `}
+
+              ${hasMultiple ? `
+                <button onclick="switchProductImage('${p.id}', -1)" type="button" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-coyote hover:text-slatecharcoal text-white p-1.5 rounded-full shadow transition z-10">
+                  <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button onclick="switchProductImage('${p.id}', 1)" type="button" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-coyote hover:text-slatecharcoal text-white p-1.5 rounded-full shadow transition z-10">
+                  <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+              ` : ''}
               
               ${p.soldOut ? `
-                <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
-                  <span class="bg-stone-900 border border-stone-700 text-stone-300 text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5">
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
+                  <span class="bg-stone-900/90 border border-stone-700 text-stone-300 text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5">
                     <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-500"></i> Sold Out
                   </span>
                 </div>
@@ -398,7 +440,7 @@
             `}
           </div>
         </div>
-      `).join("");
+      `;}).join("");
       lucide.createIcons();
     }
 
