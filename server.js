@@ -44,22 +44,10 @@ app.post('/create-checkout-session', async (req, res) => {
       },
       shipping_options: [
         {
-          shipping_rate_data: {
-            type: 'fixed_amount',
-            fixed_amount: {
-              amount: 895, // $8.95 standard rate
-              currency: 'usd',
-            },
-            display_name: 'Standard Tracked Ground (USPS/UPS)',
-            delivery_estimate: {
-              minimum: { unit: 'business_day', value: 3 },
-              maximum: { unit: 'business_day', value: 5 },
-            },
-            tax_behavior: 'exclusive',
-          },
+          shipping_rate: 'shr_1U7NWi3z3vaDR2XeNJuvYJut', // $8.95 Standard Tracked Ground
         },
         {
-          shipping_rate: 'shr_1U7NKu3z3vaDR2Xex3a7utMi', // Your Live Free Local Pickup Rate ID
+          shipping_rate: 'shr_1U7NKu3z3vaDR2Xex3a7utMi', // $0.00 Free Local Pickup / Drop-off
         },
       ],
       success_url: `${req.headers.origin}/?success=true`,
