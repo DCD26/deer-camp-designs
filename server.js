@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '')));
 
+// Route to create a Stripe Checkout Session
 app.post('/create-checkout-session', async (req, res) => {
   try {
     const { items, fulfillmentMethod } = req.body;
@@ -31,29 +32,28 @@ app.post('/create-checkout-session', async (req, res) => {
       };
     });
 
-    // Add Standard Tracked Shipping line item if customer did not choose Free Local Pickup
+    // Add delivery or pickup line item
     if (fulfillmentMethod === 'shipping') {
       line_items.push({
         price_data: {
           currency: 'usd',
           product_data: {
             name: 'Standard Tracked Shipping (USPS/UPS)',
-            description: 'Insured tracking included',
+            description: '3-5 Business Days Delivery',
           },
           unit_amount: 599, // $5.99 Standard Shipping
         },
         quantity: 1,
       });
     } else {
-      // Local pickup line item at $0.00
       line_items.push({
         price_data: {
           currency: 'usd',
           product_data: {
-            name: 'Local Pickup / Free Drop-off',
-            description: 'Free local collection/delivery (Midland/Odessa area)',
+            name: 'Local Pickup / Drop-Off',
+            description: 'Free Local Pickup/Drop-off (Midland / Odessa area)',
           },
-          unit_amount: 0,
+          unit_amount: 0, // $0.00 Free Pickup
         },
         quantity: 1,
       });
@@ -70,7 +70,7 @@ app.post('/create-checkout-session', async (req, res) => {
       cancel_url: `${req.headers.origin}/?canceled=true`,
     };
 
-    // If shipping is required, collect delivery address
+    // If shipping, collect delivery address
     if (fulfillmentMethod === 'shipping') {
       sessionParams.shipping_address_collection = {
         allowed_countries: ['US'],
@@ -85,6 +85,7 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
+// Fallback to index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
