@@ -104,6 +104,88 @@
     </div>
   </main>
 
+  <!-- Expanded Product Checkout & Large Image Modal -->
+  <div id="product-detail-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950">
+        <div class="flex items-center gap-2">
+          <span id="modal-product-category" class="text-[11px] font-black uppercase tracking-widest text-coyote bg-coyote/10 px-2.5 py-1 rounded border border-coyote/20">Category</span>
+          <h3 id="modal-product-title" class="text-base sm:text-lg font-bold text-white tracking-wide truncate">Product Details</h3>
+        </div>
+        <button type="button" onclick="closeProductModal()" class="text-stone-400 hover:text-white transition p-1">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 sm:p-8 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Left: Large Image Showcase with Hover Zoom -->
+        <div class="space-y-4">
+          <div class="w-full h-72 sm:h-96 bg-stone-950 rounded-xl flex flex-col items-center justify-center border border-stone-800 relative overflow-hidden group cursor-zoom-in shadow-inner">
+            <div id="modal-icon-container" class="transition-transform duration-300 group-hover:scale-125 flex items-center justify-center">
+              <i id="modal-product-icon" data-lucide="shield" class="w-28 h-28 text-coyote opacity-90"></i>
+            </div>
+            <div class="absolute bottom-3 right-3 bg-stone-900/80 backdrop-blur border border-stone-700/60 px-2.5 py-1 rounded-md text-[10px] text-stone-400 font-semibold flex items-center gap-1">
+              <i data-lucide="zoom-in" class="w-3 h-3 text-coyote"></i> Hover to Zoom
+            </div>
+          </div>
+          <p id="modal-product-badge" class="text-xs text-center font-bold text-coyote tracking-wide"></p>
+        </div>
+
+        <!-- Right: Configurations & Direct Payment Area -->
+        <div class="flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div>
+              <span id="modal-product-price" class="text-3xl font-black text-white">$0.00</span>
+              <p id="modal-product-description" class="text-sm text-stone-300 mt-2 leading-relaxed"></p>
+            </div>
+
+            <!-- Color Options -->
+            <div id="modal-color-wrapper" class="hidden pt-3 border-t border-stone-800">
+              <label class="block text-xs font-bold uppercase tracking-wider text-coyote mb-1.5">
+                Choose Color:
+              </label>
+              <select id="modal-selected-color" class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2.5 text-xs text-stone-200 focus:outline-none focus:border-coyote">
+                <option value="Black">Black</option>
+                <option value="Tan">Tan</option>
+                <option value="Brown">Brown</option>
+              </select>
+            </div>
+
+            <!-- Custom Inscription / Notes -->
+            <div id="modal-custom-wrapper" class="hidden pt-3 border-t border-stone-800">
+              <label id="modal-custom-label" class="block text-xs font-bold uppercase tracking-wider text-coyote mb-1.5">
+                Custom Details:
+              </label>
+              <textarea id="modal-custom-input" rows="2" placeholder="Type custom details here..." class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote placeholder-stone-600 resize-none"></textarea>
+            </div>
+
+            <!-- Fabrication Policy Note -->
+            <div class="bg-stone-950/80 border border-stone-800 rounded-lg p-3 text-[11px] text-stone-400 leading-relaxed">
+              <span class="text-stone-300 font-semibold">Custom Order Policy:</span> Custom fabricated on demand. No returns unless damaged upon delivery or lettering error.
+            </div>
+          </div>
+
+          <!-- Checkout Actions -->
+          <div class="space-y-2 pt-4 border-t border-stone-800">
+            <button id="modal-buy-now-btn" onclick="directBuyNow()" class="w-full bg-coyote hover:bg-coyote-dark text-slatecharcoal font-black uppercase tracking-wider py-3.5 px-4 rounded-lg shadow-lg transition flex justify-center items-center gap-2">
+              <i data-lucide="credit-card" class="w-4 h-4"></i> Proceed to Secure Checkout
+            </button>
+            <button id="modal-add-cart-btn" onclick="modalAddToCart()" class="w-full bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold uppercase tracking-wider py-2.5 px-4 rounded-lg transition text-xs flex justify-center items-center gap-2">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add to Cart &amp; Continue Browsing
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
   <!-- Slide-out Cart Drawer -->
   <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
     <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
@@ -270,12 +352,10 @@
         name: "PCS / Retirement Award",
         price: 49.99,
         badge: "Hybrid 3D with Maple Plywood and Acrylic",
-        soldOut: false,
-        images: ["award-plaque-1.jpg", "award-plaque-2.jpg"],
-        currentImageIndex: 0,
+        soldOut: true,
         customizable: true,
         customPrompt: "Enter Unit, Rank, Name, Service Dates, or Custom Inscription:",
-        description: "Custom military presentation plaque featuring 3D printed framing with laser-engraved rank, service dates, and personalized paragraph options.",
+        description: "Custom military presentation plaque featuring 3D printed Framing with laser-engraved rank, service dates, and personalized paragraph options.",
         icon: "shield"
       },
       {
@@ -285,8 +365,6 @@
         price: 49.99,
         badge: "Customized Maple Plywood / Laser Cut and Engraved",
         soldOut: true,
-        images: ["hunt-frame.jpg"],
-        currentImageIndex: 0,
         customizable: true,
         customPrompt: "Enter Harvest Location, Hunter Name, and Date: please email your photo that will be engraved",
         description: "Custom 10x8 inch frame laser cut and engraved to preserve the memory of the hunt.",
@@ -299,23 +377,20 @@
         price: 19.99,
         badge: "3D Printed Magnetic Range Finder Mount",
         soldOut: true,
-        images: ["rangefinder-mount.jpg"],
-        currentImageIndex: 0,
         hasColors: true,
         colors: ["Black", "Tan", "Brown"],
         customizable: true,
+        customPrompt: "Enter Custom Inscription or Season/Year (Optional):",
         description: "Get easier access to your range finder with this magnetized adapter.",
         icon: "crosshair"
       },
       {
         id: "prod_bow_holder_matthews",
-        name: "Vehicle Headrest Bow Holder",
+        name: "Matthews Headrest Bow Holder",
         category: "functional",
         price: 15.99,
         badge: "3D Printed Bow Holder",
         soldOut: true,
-        images: ["bow-holder.jpg"],
-        currentImageIndex: 0,
         hasColors: true,
         colors: ["Black", "Tan", "Brown"],
         customizable: false,
@@ -329,8 +404,6 @@
         price: 25.99,
         badge: "Custom 3D Print",
         soldOut: true,
-        images: ["gear-plate.jpg"],
-        currentImageIndex: 0,
         hasColors: true,
         colors: ["Black", "Tan", "Brown"],
         customizable: false,
@@ -341,17 +414,7 @@
 
     let cart = [];
     let activeFilter = 'all';
-
-    function switchProductImage(productId, step) {
-      const p = products.find(prod => prod.id === productId);
-      if (!p || !p.images || p.images.length <= 1) return;
-
-      p.currentImageIndex = (p.currentImageIndex + step + p.images.length) % p.images.length;
-      const imgEl = document.getElementById(`img-${productId}`);
-      if (imgEl) {
-        imgEl.src = p.images[p.currentImageIndex];
-      }
-    }
+    let currentModalProduct = null;
 
     function renderProducts() {
       const grid = document.getElementById("product-grid");
@@ -359,37 +422,18 @@
         ? products 
         : products.filter(p => p.category === activeFilter);
 
-      grid.innerHTML = filtered.map(p => {
-        const activeImg = (p.images && p.images.length > 0) ? p.images[p.currentImageIndex || 0] : null;
-        const hasMultiple = p.images && p.images.length > 1;
-
-        return `
-        <div class="bg-stone-900/60 border ${p.soldOut ? 'border-stone-800/50 opacity-75' : 'border-stone-800/90 hover:border-coyote/40'} rounded-xl p-6 flex flex-col justify-between transition shadow-xl group relative">
+      grid.innerHTML = filtered.map(p => `
+        <div onclick="openProductModal('${p.id}')" class="bg-stone-900/60 border ${p.soldOut ? 'border-stone-800/50 opacity-75' : 'border-stone-800/90 hover:border-coyote/50'} rounded-xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl group relative cursor-pointer">
           <div>
-            <div class="w-full h-60 bg-stone-950/80 rounded-lg mb-5 flex flex-col items-center justify-center border border-stone-800/80 group-hover:border-stone-700 transition relative overflow-hidden">
-              ${activeImg ? `
-                <img id="img-${p.id}" src="${activeImg}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${p.soldOut ? 'grayscale contrast-75' : ''}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                <div class="hidden flex-col items-center justify-center w-full h-full">
-                  <i data-lucide="${p.icon}" class="w-14 h-14 ${p.soldOut ? 'text-stone-600' : 'text-coyote opacity-80'} mb-2"></i>
-                  <span class="text-[11px] uppercase tracking-widest font-black text-stone-500">${p.category}</span>
-                </div>
-              ` : `
-                <i data-lucide="${p.icon}" class="w-14 h-14 ${p.soldOut ? 'text-stone-600' : 'text-coyote opacity-80'} mb-2"></i>
-                <span class="text-[11px] uppercase tracking-widest font-black text-stone-500">${p.category}</span>
-              `}
-
-              ${hasMultiple ? `
-                <button onclick="switchProductImage('${p.id}', -1)" type="button" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-coyote hover:text-slatecharcoal text-white p-1.5 rounded-full shadow transition z-10">
-                  <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                </button>
-                <button onclick="switchProductImage('${p.id}', 1)" type="button" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-coyote hover:text-slatecharcoal text-white p-1.5 rounded-full shadow transition z-10">
-                  <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                </button>
-              ` : ''}
+            <div class="w-full h-52 bg-stone-950/90 rounded-lg mb-5 flex flex-col items-center justify-center border border-stone-800/80 group-hover:border-coyote/30 transition relative overflow-hidden">
+              <div class="transition-transform duration-300 group-hover:scale-125 flex flex-col items-center">
+                <i data-lucide="${p.icon}" class="w-16 h-16 ${p.soldOut ? 'text-stone-600' : 'text-coyote opacity-85'} mb-2"></i>
+                <span class="text-[10px] uppercase tracking-widest font-black text-stone-500">${p.category}</span>
+              </div>
               
               ${p.soldOut ? `
-                <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
-                  <span class="bg-stone-900/90 border border-stone-700 text-stone-300 text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5">
+                <div class="absolute inset-0 bg-black/65 backdrop-blur-[2px] flex items-center justify-center">
+                  <span class="bg-stone-900 border border-stone-700 text-stone-300 text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5">
                     <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-500"></i> Sold Out
                   </span>
                 </div>
@@ -402,46 +446,155 @@
               <span class="text-[11px] text-coyote font-bold bg-coyote/10 px-2.5 py-1 rounded border border-coyote/20 uppercase tracking-wider">${p.badge}</span>
             `}
 
-            <h3 class="text-xl font-bold text-white mt-3">${p.name}</h3>
-            <p class="text-sm text-stone-400 mt-2 leading-relaxed">${p.description}</p>
-
-            ${(p.hasColors && !p.soldOut) ? `
-              <div class="mt-4 pt-3 border-t border-stone-800">
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-coyote mb-1">
-                  Select Color:
-                </label>
-                <select id="color-${p.id}" class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote">
-                  ${p.colors.map(color => `<option value="${color}">${color}</option>`).join('')}
-                </select>
-              </div>
-            ` : ''}
-
-            ${(p.customizable && !p.soldOut) ? `
-              <div class="mt-3 pt-3 border-t border-stone-800">
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-coyote mb-1">
-                  ${p.customPrompt}
-                </label>
-                <input type="text" id="custom-text-${p.id}" placeholder="Type details here..." class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote placeholder-stone-600" />
-              </div>
-            ` : ''}
+            <h3 class="text-xl font-bold text-white mt-3 group-hover:text-coyote transition">${p.name}</h3>
+            <p class="text-sm text-stone-400 mt-2 leading-relaxed line-clamp-2">${p.description}</p>
           </div>
 
           <div class="mt-6 flex items-center justify-between pt-5 border-t border-stone-800/80">
             <span class="text-2xl font-black ${p.soldOut ? 'text-stone-500' : 'text-stone-100'}">$${p.price.toFixed(2)}</span>
             
             ${p.soldOut ? `
-              <button disabled class="bg-stone-950 border border-stone-800 text-stone-500 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider cursor-not-allowed">
+              <span class="bg-stone-950 border border-stone-800 text-stone-500 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">
                 Sold Out
-              </button>
+              </span>
             ` : `
-              <button onclick="addToCart('${p.id}')" class="bg-stone-800 hover:bg-coyote hover:text-slatecharcoal text-stone-200 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition flex items-center gap-2">
-                <i data-lucide="plus" class="w-4 h-4"></i> Add to Order
-              </button>
+              <span class="bg-stone-800 group-hover:bg-coyote group-hover:text-slatecharcoal text-stone-200 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition flex items-center gap-1.5">
+                View &amp; Buy <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </span>
             `}
           </div>
         </div>
-      `;}).join("");
+      `).join("");
       lucide.createIcons();
+    }
+
+    function openProductModal(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      currentModalProduct = product;
+
+      document.getElementById("modal-product-title").innerText = product.name;
+      document.getElementById("modal-product-category").innerText = product.category;
+      document.getElementById("modal-product-price").innerText = `$${product.price.toFixed(2)}`;
+      document.getElementById("modal-product-description").innerText = product.description;
+      document.getElementById("modal-product-badge").innerText = product.badge;
+
+      // Update Icon
+      const iconContainer = document.getElementById("modal-icon-container");
+      iconContainer.innerHTML = `<i data-lucide="${product.icon}" class="w-32 h-32 ${product.soldOut ? 'text-stone-600' : 'text-coyote opacity-90'}"></i>`;
+
+      // Color selector handling
+      const colorWrapper = document.getElementById("modal-color-wrapper");
+      const colorSelect = document.getElementById("modal-selected-color");
+      if (product.hasColors && !product.soldOut) {
+        colorSelect.innerHTML = product.colors.map(c => `<option value="${c}">${c}</option>`).join('');
+        colorWrapper.classList.remove("hidden");
+      } else {
+        colorWrapper.classList.add("hidden");
+      }
+
+      // Custom prompt handling
+      const customWrapper = document.getElementById("modal-custom-wrapper");
+      const customLabel = document.getElementById("modal-custom-label");
+      const customInput = document.getElementById("modal-custom-input");
+      customInput.value = "";
+      if (product.customizable && !product.soldOut) {
+        customLabel.innerText = product.customPrompt || "Custom Details:";
+        customWrapper.classList.remove("hidden");
+      } else {
+        customWrapper.classList.add("hidden");
+      }
+
+      // Button states
+      const buyBtn = document.getElementById("modal-buy-now-btn");
+      const addBtn = document.getElementById("modal-add-cart-btn");
+      if (product.soldOut) {
+        buyBtn.disabled = true;
+        buyBtn.innerText = "Item Currently Sold Out";
+        buyBtn.classList.add("opacity-50", "cursor-not-allowed");
+        addBtn.classList.add("hidden");
+      } else {
+        buyBtn.disabled = false;
+        buyBtn.innerHTML = `<i data-lucide="credit-card" class="w-4 h-4"></i> Proceed to Secure Checkout`;
+        buyBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        addBtn.classList.remove("hidden");
+      }
+
+      document.getElementById("product-detail-modal").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeProductModal() {
+      document.getElementById("product-detail-modal").classList.add("hidden");
+      currentModalProduct = null;
+    }
+
+    function modalAddToCart() {
+      if (!currentModalProduct || currentModalProduct.soldOut) return;
+
+      const customNote = currentModalProduct.customizable ? document.getElementById("modal-custom-input").value.trim() : "";
+      const selectedColor = currentModalProduct.hasColors ? document.getElementById("modal-selected-color").value : "";
+
+      const existing = cart.find(c => 
+        c.id === currentModalProduct.id && 
+        c.customNote === customNote && 
+        c.selectedColor === selectedColor
+      );
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ 
+          ...currentModalProduct, 
+          qty: 1, 
+          customNote: customNote,
+          selectedColor: selectedColor 
+        });
+      }
+
+      closeProductModal();
+      updateCartUI();
+      toggleCart();
+    }
+
+    async function directBuyNow() {
+      if (!currentModalProduct || currentModalProduct.soldOut) return;
+
+      const customNote = currentModalProduct.customizable ? document.getElementById("modal-custom-input").value.trim() : "";
+      const selectedColor = currentModalProduct.hasColors ? document.getElementById("modal-selected-color").value : "";
+
+      const buyBtn = document.getElementById("modal-buy-now-btn");
+      buyBtn.innerText = "Connecting to Stripe...";
+      buyBtn.disabled = true;
+
+      const singleItemOrder = [{
+        ...currentModalProduct,
+        qty: 1,
+        customNote: customNote,
+        selectedColor: selectedColor
+      }];
+
+      try {
+        const response = await fetch('/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: singleItemOrder })
+        });
+
+        const session = await response.json();
+        if (session.url) {
+          window.location.href = session.url;
+        } else {
+          alert("Error creating checkout session. Ensure the server.js backend is running.");
+          buyBtn.innerText = "Proceed to Secure Checkout";
+          buyBtn.disabled = false;
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Backend not reachable. Ensure 'node server.js' is running.");
+        buyBtn.innerText = "Proceed to Secure Checkout";
+        buyBtn.disabled = false;
+      }
     }
 
     function filterCatalog(category) {
@@ -482,47 +635,6 @@
     function copyEmailFallback(e) {
       navigator.clipboard.writeText("deercampdesigns@outlook.com");
       showToast("Email address copied: deercampdesigns@outlook.com");
-    }
-
-    function addToCart(productId) {
-      const item = products.find(p => p.id === productId);
-      if (item.soldOut) return;
-
-      let customNote = "";
-      if (item.customizable) {
-        const inputEl = document.getElementById(`custom-text-${productId}`);
-        if (inputEl) {
-          customNote = inputEl.value.trim();
-          inputEl.value = "";
-        }
-      }
-
-      let selectedColor = "";
-      if (item.hasColors) {
-        const colorEl = document.getElementById(`color-${productId}`);
-        if (colorEl) {
-          selectedColor = colorEl.value;
-        }
-      }
-
-      const existing = cart.find(c => 
-        c.id === productId && 
-        c.customNote === customNote && 
-        c.selectedColor === selectedColor
-      );
-
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ 
-          ...item, 
-          qty: 1, 
-          customNote: customNote,
-          selectedColor: selectedColor 
-        });
-      }
-      updateCartUI();
-      toggleCart();
     }
 
     function updateCartUI() {
