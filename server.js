@@ -49,7 +49,7 @@ app.post('/create-checkout-session', async (req, res) => {
       },
       shipping_options: [
         {
-          shipping_rate: 'shr_1U7NWi3z3vaDR2XeNJuvYJut', // Standard $8.95
+          shipping_rate: 'shr_1U7OAU3z3vaDR2XeS8aCvCs2', // Standard Tracked Ground $5.95
         },
         {
           shipping_rate: 'shr_1U7NKu3z3vaDR2Xex3a7utMi', // Free Local Pickup $0.00
