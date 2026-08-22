@@ -26,9 +26,16 @@
 <body class="bg-slatecharcoal text-stone-200 font-sans antialiased min-h-screen flex flex-col justify-between relative">
 
   <!-- Top Announcement Bar -->
-  <div class="bg-drab-dark text-stone-300 border-b border-stone-800 text-xs py-2.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
-    <i data-lucide="shield-check" class="w-4 h-4 text-coyote"></i>
-    <span>Proudly Veteran Owned &amp; Operated &bull; Precision 3D &amp; Laser Fabrication</span>
+  <div class="bg-drab-dark text-stone-300 border-b border-stone-800 text-xs py-2.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2 flex-wrap">
+    <div class="flex items-center gap-1.5">
+      <i data-lucide="shield-check" class="w-4 h-4 text-coyote"></i>
+      <span>Proudly Veteran Owned &amp; Operated &bull; Precision 3D &amp; Laser Fabrication</span>
+    </div>
+    <span class="hidden sm:inline text-stone-600">|</span>
+    <div class="flex items-center gap-1 text-coyote font-semibold">
+      <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+      <span>Local in Midland-Odessa? Use code <strong class="font-mono bg-stone-900/80 px-1.5 py-0.5 rounded border border-coyote/30 text-white">PICKUP</strong> for Free Delivery</span>
+    </div>
   </div>
 
   <!-- Header Navigation -->
@@ -142,7 +149,7 @@
         </div>
 
         <!-- Right: Configurations & Direct Payment Area -->
-        <div class="flex flex-col justify-between space-y-5">
+        <div class="flex flex-col justify-between space-y-4">
           <div class="space-y-4">
             <div>
               <span id="modal-product-price" class="text-3xl font-black text-white">$0.00</span>
@@ -172,10 +179,10 @@
             <!-- Delivery & Local Pickup Notice -->
             <div class="bg-stone-950 border border-stone-800/80 rounded-xl p-3 text-xs text-stone-300 space-y-1">
               <div class="flex items-center gap-1.5 text-coyote font-bold">
-                <i data-lucide="truck" class="w-4 h-4"></i> Delivery Options:
+                <i data-lucide="map-pin" class="w-4 h-4"></i> Local in Midland / Odessa?
               </div>
-              <p class="text-[11px] text-stone-400">
-                You can select either <strong>Standard Tracked Shipping ($5.99)</strong> or <strong>Free Local Pickup / Drop-off ($0.00)</strong> directly on the next Stripe checkout screen.
+              <p class="text-[11px] text-stone-400 leading-relaxed">
+                Use promo code <strong class="text-coyote font-mono font-bold">PICKUP</strong> at checkout to remove shipping fees for free local drop-off.
               </p>
             </div>
 
@@ -227,9 +234,14 @@
             <span id="cart-subtotal" class="text-coyote font-bold">$0.00</span>
           </div>
 
-          <div class="bg-stone-950 border border-stone-800 rounded-xl p-3 mb-3 text-[11px] text-stone-400 flex items-start gap-2">
-            <i data-lucide="truck" class="w-4 h-4 text-coyote shrink-0 mt-0.5"></i>
-            <span>Choose <strong>Tracked Shipping ($5.99)</strong> or <strong>Free Local Pickup ($0.00)</strong> at checkout.</span>
+          <!-- Free Local Pickup Coupon Callout Box -->
+          <div class="bg-stone-950 border border-coyote/40 rounded-xl p-3 mb-3 text-xs text-stone-300 space-y-1">
+            <div class="flex items-center gap-1.5 text-coyote font-bold">
+              <i data-lucide="map-pin" class="w-4 h-4"></i> Local Pickup in Midland / Odessa?
+            </div>
+            <p class="text-[11px] text-stone-400">
+              Apply code <strong class="text-coyote font-mono font-bold text-xs bg-stone-900 px-1 py-0.5 rounded border border-coyote/30">PICKUP</strong> at checkout to take shipping off your order!
+            </p>
           </div>
 
           <!-- Custom Orders Returns & Exchanges Policy Disclaimer -->
