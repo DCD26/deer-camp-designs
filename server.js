@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, '')));
 // Route to create a Stripe Checkout Session
 app.post('/create-checkout-session', async (req, res) => {
   try {
-    const { items, fulfillmentMethod } = req.body;
+    const { items } = req.body;
 
     const line_items = items.map(item => {
       const details = [];
@@ -32,53 +32,40 @@ app.post('/create-checkout-session', async (req, res) => {
       };
     });
 
-    // Add shipping fee if customer selected standard shipping
-    if (fulfillmentMethod === 'shipping') {
-      line_items.push({
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'Standard Tracked Shipping (USPS / UPS)',
-            description: 'Insured Tracked Delivery (3-5 Business Days)',
-          },
-          unit_amount: 599, // $5.99
-        },
-        quantity: 1,
-      });
-    } else {
-      // Local pickup line item at $0.00
-      line_items.push({
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'Local Pickup / Free Drop-off',
-            description: 'Free Local Hand-off (Midland / Odessa area)',
-          },
-          unit_amount: 0,
-        },
-        quantity: 1,
-      });
-    }
-
-    const sessionParams = {
+    const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: line_items,
       mode: 'payment',
       allow_promotion_codes: true,
       automatic_tax: { enabled: true },
       billing_address_collection: 'required',
+      shipping_address_collection: {
+        allowed_countries: ['US'],
+      },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: 'fixed_amount',
+            fixed_amount: {
+              amount: 895, // $8.95 standard rate
+              currency: 'usd',
+            },
+            display_name: 'Standard Tracked Ground (USPS/UPS)',
+            delivery_estimate: {
+              minimum: { unit: 'business_day', value: 3 },
+              maximum: { unit: 'business_day', value: 5 },
+            },
+            tax_behavior: 'exclusive',
+          },
+        },
+        {
+          shipping_rate: 'shr_1U7NKu3z3vaDR2Xex3a7utMi', // Your Live Free Local Pickup Rate ID
+        },
+      ],
       success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/?canceled=true`,
-    };
+    });
 
-    // If standard shipping, collect shipping address
-    if (fulfillmentMethod === 'shipping') {
-      sessionParams.shipping_address_collection = {
-        allowed_countries: ['US'],
-      };
-    }
-
-    const session = await stripe.checkout.sessions.create(sessionParams);
     res.json({ url: session.url });
   } catch (error) {
     console.error('Error creating checkout session:', error);
