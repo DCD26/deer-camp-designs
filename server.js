@@ -1,30 +1,30 @@
+require('dotenv').config();
 const express = require('express');
+const path = require('path');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 const app = express();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_YOUR_STRIPE_KEY_HERE');
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static('.'));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '')));
 
+// Route to create a Stripe Checkout Session
 app.post('/create-checkout-session', async (req, res) => {
   try {
     const { items } = req.body;
 
-    const lineItems = items.map(item => {
-      // Append the custom engraving text to the product description if provided
-      const finalDescription = item.customNote 
-        ? `${item.description} | CUSTOM NOTE: ${item.customNote}`
-        : item.description;
+    const line_items = items.map(item => {
+      const details = [];
+      if (item.selectedColor) details.push(`Color: ${item.selectedColor}`);
+      if (item.customNote) details.push(`Custom Details: ${item.customNote}`);
 
       return {
         price_data: {
           currency: 'usd',
           product_data: {
             name: item.name,
-            description: finalDescription,
-            tax_code: 'txcd_99999999',
-            metadata: {
-              custom_engraving_details: item.customNote || 'None',
-            }
+            description: details.length > 0 ? details.join(' | ') : undefined,
           },
           unit_amount: Math.round(item.price * 100),
         },
@@ -34,12 +34,11 @@ app.post('/create-checkout-session', async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: lineItems,
+      line_items: line_items,
       mode: 'payment',
-      allow_promotion_codes: true,
-      automatic_tax: {
-        enabled: true,
-      },
+      allow_promotion_codes: true, // Enables coupons & promo codes
+      automatic_tax: { enabled: true },
+      billing_address_collection: 'required',
       shipping_address_collection: {
         allowed_countries: ['US'],
       },
@@ -47,25 +46,48 @@ app.post('/create-checkout-session', async (req, res) => {
         {
           shipping_rate_data: {
             type: 'fixed_amount',
-            fixed_amount: { amount: 895, currency: 'usd' },
-            display_name: 'Standard Tracked Ground (USPS/UPS)',
+            fixed_amount: {
+              amount: 599, // $5.99 Standard Tracked Shipping
+              currency: 'usd',
+            },
+            display_name: 'Standard Tracked Shipping',
             delivery_estimate: {
               minimum: { unit: 'business_day', value: 3 },
               maximum: { unit: 'business_day', value: 5 },
             },
           },
         },
+        {
+          shipping_rate_data: {
+            type: 'fixed_amount',
+            fixed_amount: {
+              amount: 0, // $0.00 Free Pickup
+              currency: 'usd',
+            },
+            display_name: 'Local Pickup / Free Drop-off',
+            delivery_estimate: {
+              minimum: { unit: 'business_day', value: 1 },
+              maximum: { unit: 'business_day', value: 3 },
+            },
+          },
+        },
       ],
-      success_url: `${req.headers.origin}/index.html?status=success`,
-      cancel_url: `${req.headers.origin}/index.html?status=cancelled`,
+      success_url: `${req.headers.origin}/?success=true`,
+      cancel_url: `${req.headers.origin}/?canceled=true`,
     });
 
     res.json({ url: session.url });
   } catch (error) {
-    console.error('Stripe Session Error:', error);
+    console.error('Error creating checkout session:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Deer Camp Designs store live on port ${PORT}`));
+// Fallback to index.html for root path
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

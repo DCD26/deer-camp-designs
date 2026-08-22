@@ -169,9 +169,12 @@
               <textarea id="modal-custom-input" rows="2" placeholder="Type custom details here..." class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote placeholder-stone-600 resize-none"></textarea>
             </div>
 
-            <!-- Fabrication Policy Note -->
-            <div class="bg-stone-950/80 border border-stone-800 rounded-lg p-3 text-[11px] text-stone-400 leading-relaxed">
-              <span class="text-stone-300 font-semibold">Custom Order Policy:</span> Custom fabricated on demand. No returns unless damaged upon delivery or lettering error.
+            <!-- Pickup and Shipping Information Notice -->
+            <div class="bg-stone-950/80 border border-stone-800 rounded-lg p-3 text-[11px] text-stone-400 space-y-1.5">
+              <div class="flex items-center gap-1.5 text-coyote font-bold">
+                <i data-lucide="truck" class="w-3.5 h-3.5"></i> Tracked Shipping or Free Local Pickup
+              </div>
+              <p>Choose between standard shipping or <strong>Free Local Pickup / Drop-off ($0.00)</strong> at checkout.</p>
             </div>
           </div>
 
@@ -216,9 +219,11 @@
             <span>Subtotal</span>
             <span id="cart-subtotal" class="text-coyote font-bold">$0.00</span>
           </div>
-          <p class="text-[11px] text-stone-500 mb-3">
-            Rooftop sales tax and tracked shipping calculated securely at checkout via Stripe Tax.
-          </p>
+          
+          <div class="bg-stone-950 border border-stone-800 rounded-lg p-2.5 mb-3 text-[11px] text-stone-400 flex items-start gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-coyote shrink-0 mt-0.5"></i>
+            <span>Select <strong>Tracked Shipping</strong> or <strong>Free Local Pickup / Drop-off</strong> on the next screen.</span>
+          </div>
 
           <!-- Custom Orders Returns & Exchanges Policy Disclaimer -->
           <div class="bg-stone-950/90 border border-stone-800/80 rounded-lg p-3 mb-4 text-[11px] text-stone-400 leading-relaxed">
@@ -363,7 +368,7 @@
         soldOut: false,
         customizable: true,
         customPrompt: "Enter a short description of what you want, customization will be done over email",
-        description: "Custom made 12x9 inch presentation plaque featuring 3D printed framing, and laser engraved images provided by customers. Military, General, or Corporate style awards. "
+        description: "Custom made 12x9 inch presentation plaque featuring 3D printed framing, and laser engraved images provided by customers. Military, General, or Corporate style awards."
       },
       {
         id: "prod_hunt_frame_01",
@@ -399,7 +404,7 @@
         category: "functional",
         price: 15.99,
         badge: "3D Printed Bow Holder",
-        image: "bow-holder.jpg",
+        images: ["bow-holder.jpg"], // Properly wrapped in array brackets
         icon: "compass",
         soldOut: false,
         hasColors: true,
