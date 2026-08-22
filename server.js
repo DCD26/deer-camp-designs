@@ -32,7 +32,7 @@ app.post('/create-checkout-session', async (req, res) => {
       };
     });
 
-    // Add shipping line item if shipping is chosen; otherwise add $0.00 local pickup line item
+    // Add shipping line item only if customer selected shipping
     if (fulfillmentMethod === 'shipping') {
       line_items.push({
         price_data: {
@@ -46,14 +46,15 @@ app.post('/create-checkout-session', async (req, res) => {
         quantity: 1,
       });
     } else {
+      // Local pickup line item at $0.00
       line_items.push({
         price_data: {
           currency: 'usd',
           product_data: {
-            name: 'Local Pickup / Free Drop-off',
-            description: 'Local Delivery/Collection (Midland / Odessa area)',
+            name: 'Local Pickup / Free Hand Delivery',
+            description: 'Free Local Handoff (Midland / Odessa area)',
           },
-          unit_amount: 0, // $0.00 Free Pickup
+          unit_amount: 0,
         },
         quantity: 1,
       });
@@ -70,7 +71,7 @@ app.post('/create-checkout-session', async (req, res) => {
       cancel_url: `${req.headers.origin}/?canceled=true`,
     };
 
-    // If customer selected standard shipping, collect full street shipping address
+    // If shipping is chosen, collect shipping address
     if (fulfillmentMethod === 'shipping') {
       sessionParams.shipping_address_collection = {
         allowed_countries: ['US'],
