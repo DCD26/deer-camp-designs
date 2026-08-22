@@ -1,3 +1,9 @@
+try {
+  require('dotenv').config();
+} catch (e) {
+  // Gracefully continue if dotenv is not present
+}
+
 const express = require('express');
 const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
