@@ -34,7 +34,7 @@
     <span class="hidden sm:inline text-stone-600">|</span>
     <div class="flex items-center gap-1 text-coyote font-semibold">
       <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-      <span>Free Local Pickup / Drop-off available in Midland &amp; Odessa!</span>
+      <span>Free Local Pickup / Drop-off in Midland &amp; Odessa available at checkout!</span>
     </div>
   </div>
 
@@ -176,26 +176,33 @@
               <textarea id="modal-custom-input" rows="2" placeholder="Type custom details here..." class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote placeholder-stone-600 resize-none"></textarea>
             </div>
 
-            <!-- Fulfillment Method Selector (Product Modal) -->
+            <!-- Interactive Fulfillment Toggle (Product Modal) -->
             <div id="modal-fulfillment-wrapper" class="pt-3 border-t border-stone-800">
               <label class="block text-xs font-bold uppercase tracking-wider text-coyote mb-2">
-                Fulfillment Method:
+                Select Fulfillment Method:
               </label>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <label class="flex items-center gap-2.5 p-3 rounded-lg border border-stone-800 bg-stone-950 cursor-pointer hover:border-stone-700 transition">
-                  <input type="radio" name="modal_fulfillment" value="shipping" checked class="accent-coyote w-4 h-4" />
-                  <div class="text-xs">
-                    <span class="font-bold text-stone-200 block">Tracked Shipping</span>
-                    <span class="text-[10px] text-stone-400">+$5.99 (USPS / UPS)</span>
+                <!-- Shipping Button -->
+                <button type="button" onclick="setModalFulfillment('shipping')" id="modal-btn-shipping" class="p-3 rounded-xl border-2 border-coyote bg-stone-950 flex flex-col text-left transition relative">
+                  <div class="flex items-center justify-between w-full">
+                    <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                      <i data-lucide="truck" class="w-4 h-4 text-coyote"></i> Tracked Shipping
+                    </span>
+                    <i data-lucide="check-circle" id="modal-check-shipping" class="w-4 h-4 text-coyote"></i>
                   </div>
-                </label>
-                <label class="flex items-center gap-2.5 p-3 rounded-lg border border-coyote/40 bg-stone-950 cursor-pointer hover:border-coyote transition">
-                  <input type="radio" name="modal_fulfillment" value="pickup" class="accent-coyote w-4 h-4" />
-                  <div class="text-xs">
-                    <span class="font-bold text-coyote block">Free Local Pickup</span>
-                    <span class="text-[10px] text-stone-400">$0.00 (Midland / Odessa)</span>
+                  <span class="text-[10px] text-stone-400 mt-1">+$5.99 (USPS / UPS Delivery)</span>
+                </button>
+
+                <!-- Pickup Button -->
+                <button type="button" onclick="setModalFulfillment('pickup')" id="modal-btn-pickup" class="p-3 rounded-xl border-2 border-stone-800 bg-stone-950 flex flex-col text-left opacity-60 transition relative hover:opacity-90">
+                  <div class="flex items-center justify-between w-full">
+                    <span class="text-xs font-bold text-stone-300 flex items-center gap-1.5">
+                      <i data-lucide="map-pin" class="w-4 h-4 text-coyote"></i> Free Local Pickup
+                    </span>
+                    <i data-lucide="circle" id="modal-check-pickup" class="w-4 h-4 text-stone-600"></i>
                   </div>
-                </label>
+                  <span class="text-[10px] text-stone-400 mt-1">$0.00 (Midland / Odessa)</span>
+                </button>
               </div>
             </div>
 
@@ -243,24 +250,39 @@
 
         <div class="border-t border-stone-800 pt-3">
           
-          <!-- Fulfillment Method Selector (Cart Drawer) -->
+          <!-- Interactive Fulfillment Toggle (Cart Drawer) -->
           <div class="bg-stone-950 border border-stone-800 rounded-xl p-3 mb-3 space-y-2">
-            <span class="text-[11px] font-bold text-stone-300 uppercase tracking-wider block">Fulfillment Method:</span>
-            <div class="flex flex-col gap-1.5">
-              <label class="flex items-center justify-between text-xs text-stone-300 p-2.5 rounded-lg bg-stone-900/80 border border-stone-800 cursor-pointer hover:border-stone-700 transition">
+            <span class="text-[11px] font-bold text-stone-300 uppercase tracking-wider block">Choose Delivery:</span>
+            <div class="grid grid-cols-1 gap-2">
+              <!-- Cart Shipping Button -->
+              <button type="button" onclick="setCartFulfillment('shipping')" id="cart-btn-shipping" class="p-2.5 rounded-xl border-2 border-coyote bg-stone-900/90 flex items-center justify-between text-left transition">
                 <div class="flex items-center gap-2">
-                  <input type="radio" name="cart_fulfillment" value="shipping" checked onchange="updateCartUI()" class="accent-coyote w-4 h-4" />
-                  <span>Standard Tracked Shipping</span>
+                  <i data-lucide="truck" class="w-4 h-4 text-coyote"></i>
+                  <div>
+                    <span class="text-xs font-bold text-white block leading-tight">Tracked Shipping</span>
+                    <span class="text-[10px] text-stone-400">3-5 Business Days Delivery</span>
+                  </div>
                 </div>
-                <span class="font-bold text-stone-400">+$5.99</span>
-              </label>
-              <label class="flex items-center justify-between text-xs text-coyote p-2.5 rounded-lg bg-stone-900/80 border border-coyote/30 cursor-pointer hover:border-coyote transition">
                 <div class="flex items-center gap-2">
-                  <input type="radio" name="cart_fulfillment" value="pickup" onchange="updateCartUI()" class="accent-coyote w-4 h-4" />
-                  <span>Free Local Pickup / Drop-off</span>
+                  <span class="text-xs font-bold text-stone-300">+$5.99</span>
+                  <i data-lucide="check-circle" id="cart-check-shipping" class="w-4 h-4 text-coyote"></i>
                 </div>
-                <span class="font-bold text-coyote">$0.00</span>
-              </label>
+              </button>
+
+              <!-- Cart Pickup Button -->
+              <button type="button" onclick="setCartFulfillment('pickup')" id="cart-btn-pickup" class="p-2.5 rounded-xl border-2 border-stone-800 bg-stone-900/40 flex items-center justify-between text-left opacity-60 transition hover:opacity-90">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="map-pin" class="w-4 h-4 text-coyote"></i>
+                  <div>
+                    <span class="text-xs font-bold text-stone-300 block leading-tight">Free Local Pickup / Drop-off</span>
+                    <span class="text-[10px] text-stone-400">Midland &amp; Odessa Area</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-coyote">FREE</span>
+                  <i data-lucide="circle" id="cart-check-pickup" class="w-4 h-4 text-stone-600"></i>
+                </div>
+              </button>
             </div>
           </div>
 
@@ -472,6 +494,51 @@
     let cart = [];
     let activeFilter = 'all';
     let currentModalProduct = null;
+    let selectedModalFulfillment = 'shipping';
+    let selectedCartFulfillment = 'shipping';
+
+    function setModalFulfillment(method) {
+      selectedModalFulfillment = method;
+      const btnShipping = document.getElementById("modal-btn-shipping");
+      const btnPickup = document.getElementById("modal-btn-pickup");
+      const checkShipping = document.getElementById("modal-check-shipping");
+      const checkPickup = document.getElementById("modal-check-pickup");
+
+      if (method === 'shipping') {
+        btnShipping.className = "p-3 rounded-xl border-2 border-coyote bg-stone-950 flex flex-col text-left transition relative opacity-100";
+        btnPickup.className = "p-3 rounded-xl border-2 border-stone-800 bg-stone-950 flex flex-col text-left opacity-60 transition relative hover:opacity-90";
+        checkShipping.outerHTML = '<i data-lucide="check-circle" id="modal-check-shipping" class="w-4 h-4 text-coyote"></i>';
+        checkPickup.outerHTML = '<i data-lucide="circle" id="modal-check-pickup" class="w-4 h-4 text-stone-600"></i>';
+      } else {
+        btnShipping.className = "p-3 rounded-xl border-2 border-stone-800 bg-stone-950 flex flex-col text-left opacity-60 transition relative hover:opacity-90";
+        btnPickup.className = "p-3 rounded-xl border-2 border-coyote bg-stone-950 flex flex-col text-left transition relative opacity-100";
+        checkShipping.outerHTML = '<i data-lucide="circle" id="modal-check-shipping" class="w-4 h-4 text-stone-600"></i>';
+        checkPickup.outerHTML = '<i data-lucide="check-circle" id="modal-check-pickup" class="w-4 h-4 text-coyote"></i>';
+      }
+      lucide.createIcons();
+    }
+
+    function setCartFulfillment(method) {
+      selectedCartFulfillment = method;
+      const btnShipping = document.getElementById("cart-btn-shipping");
+      const btnPickup = document.getElementById("cart-btn-pickup");
+      const checkShipping = document.getElementById("cart-check-shipping");
+      const checkPickup = document.getElementById("cart-check-pickup");
+
+      if (method === 'shipping') {
+        btnShipping.className = "p-2.5 rounded-xl border-2 border-coyote bg-stone-900/90 flex items-center justify-between text-left transition opacity-100";
+        btnPickup.className = "p-2.5 rounded-xl border-2 border-stone-800 bg-stone-900/40 flex items-center justify-between text-left opacity-60 transition hover:opacity-90";
+        checkShipping.outerHTML = '<i data-lucide="check-circle" id="cart-check-shipping" class="w-4 h-4 text-coyote"></i>';
+        checkPickup.outerHTML = '<i data-lucide="circle" id="cart-check-pickup" class="w-4 h-4 text-stone-600"></i>';
+      } else {
+        btnShipping.className = "p-2.5 rounded-xl border-2 border-stone-800 bg-stone-900/40 flex items-center justify-between text-left opacity-60 transition hover:opacity-90";
+        btnPickup.className = "p-2.5 rounded-xl border-2 border-coyote bg-stone-900/90 flex items-center justify-between text-left transition opacity-100";
+        checkShipping.outerHTML = '<i data-lucide="circle" id="cart-check-shipping" class="w-4 h-4 text-stone-600"></i>';
+        checkPickup.outerHTML = '<i data-lucide="check-circle" id="cart-check-pickup" class="w-4 h-4 text-coyote"></i>';
+      }
+      updateCartUI();
+      lucide.createIcons();
+    }
 
     function getProductImageSrc(p) {
       if (Array.isArray(p.images) && p.images.length > 0 && p.images[0]) {
@@ -610,6 +677,9 @@
         customWrapper.classList.add("hidden");
       }
 
+      // Reset fulfillment to shipping default
+      setModalFulfillment('shipping');
+
       // Fulfillment selection visibility
       const fulfillmentWrapper = document.getElementById("modal-fulfillment-wrapper");
       if (fulfillmentWrapper) {
@@ -677,9 +747,6 @@
 
       const customNote = currentModalProduct.customizable ? document.getElementById("modal-custom-input").value.trim() : "";
       const selectedColor = currentModalProduct.hasColors ? document.getElementById("modal-selected-color").value : "";
-      
-      const fulfillmentRadio = document.querySelector('input[name="modal_fulfillment"]:checked');
-      const fulfillmentMethod = fulfillmentRadio ? fulfillmentRadio.value : 'shipping';
 
       const buyBtn = document.getElementById("modal-buy-now-btn");
       buyBtn.innerText = "Connecting to Stripe...";
@@ -698,7 +765,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             items: singleItemOrder,
-            fulfillmentMethod: fulfillmentMethod 
+            fulfillmentMethod: selectedModalFulfillment 
           })
         });
 
@@ -766,9 +833,7 @@
       const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
       const itemsSubtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
-      const cartFulfillmentRadio = document.querySelector('input[name="cart_fulfillment"]:checked');
-      const fulfillmentMethod = cartFulfillmentRadio ? cartFulfillmentRadio.value : 'shipping';
-      const shippingAmount = (fulfillmentMethod === 'shipping' && totalCount > 0) ? 5.99 : 0.00;
+      const shippingAmount = (selectedCartFulfillment === 'shipping' && totalCount > 0) ? 5.99 : 0.00;
 
       cartCount.innerText = totalCount;
       subtotalEl.innerText = `$${(itemsSubtotal + shippingAmount).toFixed(2)}`;
@@ -797,9 +862,6 @@
         return;
       }
 
-      const cartFulfillmentRadio = document.querySelector('input[name="cart_fulfillment"]:checked');
-      const fulfillmentMethod = cartFulfillmentRadio ? cartFulfillmentRadio.value : 'shipping';
-
       const checkoutBtn = document.getElementById("checkout-btn");
       checkoutBtn.innerText = "Connecting to Stripe...";
       checkoutBtn.disabled = true;
@@ -810,7 +872,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             items: cart,
-            fulfillmentMethod: fulfillmentMethod
+            fulfillmentMethod: selectedCartFulfillment
           })
         });
 
