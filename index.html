@@ -25,6 +25,7 @@
 </head>
 <body class="bg-slatecharcoal text-stone-200 font-sans antialiased min-h-screen flex flex-col justify-between relative">
 
+  <!-- Top Announcement Bar -->
   <div class="bg-drab-dark text-stone-300 border-b border-stone-800 text-xs py-2.5 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2 flex-wrap">
     <div class="flex items-center gap-1.5">
       <i data-lucide="shield-check" class="w-4 h-4 text-coyote"></i>
@@ -37,9 +38,11 @@
     </div>
   </div>
 
+  <!-- Header Navigation -->
   <header class="border-b border-stone-800/80 bg-slatecharcoal/95 backdrop-blur sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
+      <!-- Brand Logo / Title -->
       <a href="#" class="flex items-center space-x-3 group">
         <img src="logo.png" alt="Deer Camp Designs Logo" class="h-14 w-auto object-contain drop-shadow-md transition-transform group-hover:scale-105" />
         <div class="text-left">
@@ -48,17 +51,21 @@
         </div>
       </a>
 
+      <!-- Category Filter Links -->
       <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide text-stone-400">
         <button onclick="filterCatalog('awards')" class="hover:text-coyote transition">Military &amp; PCS Awards</button>
         <button onclick="filterCatalog('frames')" class="hover:text-coyote transition">Hunt Memory Photos</button>
         <button onclick="filterCatalog('functional')" class="hover:text-coyote transition">Field Gear &amp; 3D Prints</button>
       </nav>
 
+      <!-- Action Buttons -->
       <div class="flex items-center gap-3">
+        <!-- Direct Email Link -->
         <a href="mailto:deercampdesigns@outlook.com?subject=Custom%20Order%20Inquiry%20-%20Deer%20Camp%20Designs" onclick="copyEmailFallback(event)" class="flex items-center gap-2 text-xs uppercase tracking-wider font-bold bg-stone-900 border border-coyote/40 text-coyote px-3.5 py-2 rounded-lg hover:bg-coyote hover:text-slatecharcoal transition">
           <i data-lucide="mail" class="w-4 h-4"></i> Contact Us
         </a>
 
+        <!-- Cart Button -->
         <button onclick="toggleCart()" class="relative p-2.5 rounded-lg bg-stone-900 border border-stone-800 hover:border-coyote/50 transition flex items-center gap-2 group">
           <i data-lucide="shopping-bag" class="w-5 h-5 text-stone-400 group-hover:text-coyote transition"></i>
           <span class="text-sm font-semibold text-stone-200 hidden sm:inline">Cart</span>
@@ -68,6 +75,7 @@
     </div>
   </header>
 
+  <!-- Hero Section -->
   <section class="relative py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center border-b border-stone-800/60">
     <div class="flex justify-center mb-6">
       <img src="logo.png" alt="Deer Camp Designs Emblem" class="h-44 sm:h-52 w-auto object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)]" />
@@ -87,8 +95,10 @@
     </p>
   </section>
 
+  <!-- Product Catalog Grid -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
     
+    <!-- Filter Buttons -->
     <div class="flex flex-wrap gap-2 justify-center mb-10" id="filter-buttons">
       <button onclick="filterCatalog('all')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-coyote text-slatecharcoal transition">All Products</button>
       <button onclick="filterCatalog('awards')" class="filter-btn px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 text-stone-400 hover:text-white transition">PCS &amp; Military Awards</button>
@@ -97,12 +107,15 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
-      </div>
+      <!-- Dynamic Products injected via JS -->
+    </div>
   </main>
 
+  <!-- Expanded Product Checkout & Large Image Modal -->
   <div id="product-detail-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
     <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
       
+      <!-- Modal Header -->
       <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950">
         <div class="flex items-center gap-2">
           <span id="modal-product-category" class="text-[11px] font-black uppercase tracking-widest text-coyote bg-coyote/10 px-2.5 py-1 rounded border border-coyote/20">Category</span>
@@ -113,23 +126,29 @@
         </button>
       </div>
 
+      <!-- Modal Body -->
       <div class="p-6 sm:p-8 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         
+        <!-- Left: Large Image Showcase with Smooth Hover Zoom -->
         <div class="space-y-4">
           <div class="w-full h-72 sm:h-96 bg-stone-950 rounded-xl flex items-center justify-center border border-stone-800 relative overflow-hidden group cursor-zoom-in shadow-inner p-4">
             <div id="modal-image-container" class="w-full h-full flex items-center justify-center transition-transform duration-300 group-hover:scale-125">
-              </div>
+              <!-- Injected dynamically -->
+            </div>
             <div class="absolute bottom-3 right-3 bg-stone-900/80 backdrop-blur border border-stone-700/60 px-2.5 py-1 rounded-md text-[10px] text-stone-400 font-semibold flex items-center gap-1 pointer-events-none">
               <i data-lucide="zoom-in" class="w-3 h-3 text-coyote"></i> Hover to Zoom
             </div>
           </div>
 
+          <!-- Multi-Image Thumbnails -->
           <div id="modal-thumbnails-container" class="flex items-center gap-2 overflow-x-auto pb-1 hidden">
-            </div>
+            <!-- Injected dynamically -->
+          </div>
 
           <p id="modal-product-badge" class="text-xs text-center font-bold text-coyote tracking-wide"></p>
         </div>
 
+        <!-- Right: Configurations & Direct Payment Area -->
         <div class="flex flex-col justify-between space-y-4">
           <div class="space-y-4">
             <div>
@@ -140,6 +159,7 @@
               <p id="modal-product-description" class="text-sm text-stone-300 mt-2 leading-relaxed"></p>
             </div>
 
+            <!-- Color Options -->
             <div id="modal-color-wrapper" class="hidden pt-3 border-t border-stone-800">
               <label class="block text-xs font-bold uppercase tracking-wider text-coyote mb-1.5">
                 Choose Color:
@@ -151,6 +171,7 @@
               </select>
             </div>
 
+            <!-- Custom Inscription / Notes -->
             <div id="modal-custom-wrapper" class="hidden pt-3 border-t border-stone-800">
               <label id="modal-custom-label" class="block text-xs font-bold uppercase tracking-wider text-coyote mb-1.5">
                 Custom Details:
@@ -158,11 +179,13 @@
               <textarea id="modal-custom-input" rows="2" placeholder="Type custom details here..." class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote placeholder-stone-600 resize-none"></textarea>
             </div>
 
+            <!-- Fabrication Policy Note -->
             <div class="bg-stone-950/80 border border-stone-800 rounded-lg p-3 text-[11px] text-stone-400 leading-relaxed">
               <span class="text-stone-300 font-semibold">Custom Order Policy:</span> Custom fabricated on demand. No returns unless damaged upon delivery or lettering error.
             </div>
           </div>
 
+          <!-- Checkout Actions -->
           <div class="space-y-2 pt-3 border-t border-stone-800">
             <button id="modal-buy-now-btn" onclick="directBuyNow()" class="w-full bg-coyote hover:bg-coyote-dark text-slatecharcoal font-black uppercase tracking-wider py-3.5 px-4 rounded-lg shadow-lg transition flex justify-center items-center gap-2">
               <i data-lucide="credit-card" class="w-4 h-4"></i> Proceed to Secure Checkout
@@ -179,6 +202,7 @@
     </div>
   </div>
 
+  <!-- Slide-out Cart Drawer -->
   <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
     <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
     <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
@@ -193,7 +217,8 @@
             </button>
           </div>
           <div id="cart-items" class="divide-y border-b border-stone-800 border-t my-4 overflow-y-auto max-h-[48vh]">
-            </div>
+            <!-- Cart Items -->
+          </div>
         </div>
 
         <div class="border-t border-stone-800 pt-3">
@@ -202,6 +227,7 @@
             <span id="cart-subtotal" class="text-coyote font-bold">$0.00</span>
           </div>
 
+          <!-- Custom Orders Returns & Exchanges Policy Disclaimer -->
           <div class="bg-stone-950/90 border border-stone-800/80 rounded-lg p-2.5 mb-3 text-[11px] text-stone-400 leading-relaxed">
             <div class="flex items-center gap-1.5 text-coyote font-bold mb-1 uppercase tracking-wider text-[10px]">
               <i data-lucide="info" class="w-3.5 h-3.5"></i> Custom Fabrication Policy
@@ -219,14 +245,17 @@
     </div>
   </div>
 
+  <!-- Toast Notification Container -->
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-coyote/50 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
     <i data-lucide="check-circle" class="w-4 h-4 text-coyote"></i>
     <span id="toast-message">Item saved to cart!</span>
   </div>
 
+  <!-- Footer -->
   <footer class="border-t border-stone-800/80 bg-stone-950 py-12 text-stone-400 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       
+      <!-- Top Footer Row -->
       <div class="flex flex-col sm:flex-row items-center justify-between gap-6 pb-6 border-b border-stone-900">
         <div class="flex items-center space-x-3">
           <img src="logo.png" alt="Deer Camp Designs" class="h-10 w-auto object-contain opacity-90" />
@@ -242,6 +271,7 @@
         </div>
       </div>
 
+      <!-- Returns Disclaimer Footer Banner -->
       <div class="bg-stone-900/60 border border-stone-800/80 rounded-xl p-4 text-xs text-stone-400 leading-relaxed">
         <p class="font-bold text-stone-200 mb-1 flex items-center gap-2 text-xs uppercase tracking-wider text-coyote">
           <i data-lucide="shield-alert" class="w-4 h-4"></i> Returns &amp; Quality Guarantee
@@ -254,12 +284,14 @@
         </p>
       </div>
 
+      <!-- Legal Modal Buttons -->
       <div class="flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-6 text-xs text-stone-500 pt-2">
         <button type="button" onclick="openModal('privacy-modal')" class="hover:text-coyote transition underline underline-offset-4">Privacy Policy</button>
         <button type="button" onclick="openModal('terms-modal')" class="hover:text-coyote transition underline underline-offset-4">Terms of Service</button>
         <button type="button" onclick="openModal('disclaimer-modal')" class="hover:text-coyote transition underline underline-offset-4">Gear &amp; Trademark Disclaimer</button>
       </div>
 
+      <!-- Bottom Copyright -->
       <div class="text-center sm:text-left text-xs text-stone-600">
         <p>&copy; 2026 Deer Camp Designs. All rights reserved. &bull; Proudly Veteran Owned &bull; Encrypted Stripe Checkout</p>
       </div>
@@ -267,6 +299,9 @@
     </div>
   </footer>
 
+  <!-- Embedded Legal Modals -->
+
+  <!-- Privacy Policy Modal -->
   <div id="privacy-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950">
@@ -284,6 +319,7 @@
     </div>
   </div>
 
+  <!-- Terms of Service Modal -->
   <div id="terms-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950">
@@ -301,6 +337,7 @@
     </div>
   </div>
 
+  <!-- Gear & Trademark Disclaimer Modal -->
   <div id="disclaimer-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
       <div class="p-4 border-b border-stone-800 flex items-center justify-between bg-stone-950">
@@ -316,15 +353,15 @@
     </div>
   </div>
 
+  <!-- Store Logic & Cart Management -->
   <script>
-    // Set stock count on each item (0 = Sold Out)
     const products = [
       {
         id: "prod_pcs_plaque_01",
         category: "awards",
         name: "12x9 in PCS / Retirement Award",
         price: 54.99,
-        stock: 5, // Set inventory count
+        stock: 5,
         badge: "Hybrid 3D with Maple Plywood and Acrylic",
         images: ["award-plaque-1.jpg", "award-plaque-2.jpg"],
         icon: "shield",
@@ -337,7 +374,7 @@
         name: "Harvest Memory Laser Engraved Photo Frame",
         category: "frames",
         price: 49.99,
-        stock: 0, // Set to 0 for Sold Out
+        stock: 0,
         badge: "Customized Maple Plywood / Laser Cut and Engraved",
         images: [],
         icon: "image",
@@ -350,7 +387,7 @@
         name: "Magnetized Range Finder Adapter",
         category: "functional",
         price: 19.99,
-        stock: 0, // Set to 0 for Sold Out
+        stock: 0,
         badge: "3D Printed Magnetic Range Finder Mount",
         images: [],
         icon: "crosshair",
@@ -365,7 +402,7 @@
         name: "Vehicle Headrest Bow Holder",
         category: "functional",
         price: 15.99,
-        stock: 10, // Set inventory count
+        stock: 12,
         badge: "3D Printed Bow Holder",
         images: ["bow-holder.jpg"],
         icon: "compass",
@@ -379,7 +416,7 @@
         name: "Bino Harness Attachment & Gear Plate",
         category: "functional",
         price: 25.99,
-        stock: 0, // Set to 0 for Sold Out
+        stock: 0,
         badge: "Custom 3D Print",
         images: [],
         icon: "layers",
@@ -390,18 +427,14 @@
       }
     ];
 
-    // Load saved cart from localStorage on page visit
     let cart = [];
     try {
       const savedCart = localStorage.getItem('dcd_saved_cart');
-      if (savedCart) {
-        cart = JSON.parse(savedCart);
-      }
+      if (savedCart) cart = JSON.parse(savedCart);
     } catch (e) {
       cart = [];
     }
 
-    // Auto-clear cart if returning from a successful checkout
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'true') {
       cart = [];
@@ -410,6 +443,22 @@
 
     let activeFilter = 'all';
     let currentModalProduct = null;
+
+    // Fetch live inventory from server
+    async function loadLiveStock() {
+      try {
+        const res = await fetch('/api/stock');
+        const liveStock = await res.json();
+        products.forEach(p => {
+          if (liveStock[p.id] !== undefined) {
+            p.stock = liveStock[p.id];
+          }
+        });
+        renderProducts();
+      } catch (err) {
+        console.log("Using default stock numbers.");
+      }
+    }
 
     function saveCartToStorage() {
       try {
@@ -452,9 +501,7 @@
 
     function switchModalImage(imgSrc) {
       const activeImg = document.getElementById("modal-active-img");
-      if (activeImg) {
-        activeImg.src = imgSrc;
-      }
+      if (activeImg) activeImg.src = imgSrc;
       document.querySelectorAll(".thumb-btn").forEach(btn => {
         btn.classList.remove("border-coyote", "opacity-100");
         btn.classList.add("border-stone-800", "opacity-60");
@@ -528,7 +575,6 @@
       document.getElementById("modal-product-description").innerText = product.description;
       document.getElementById("modal-product-badge").innerText = product.badge;
 
-      // Stock badge inside modal
       const stockBadge = document.getElementById("modal-stock-badge");
       if (isSoldOut) {
         stockBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md border text-amber-400 bg-amber-500/10 border-amber-500/20";
@@ -541,14 +587,11 @@
         stockBadge.innerText = `${product.stock} units available`;
       }
 
-      // Update Large Image in Modal
       const imgContainer = document.getElementById("modal-image-container");
       imgContainer.innerHTML = renderImageHTML(product, true);
 
-      // Handle Thumbnails
       const thumbsContainer = document.getElementById("modal-thumbnails-container");
       const imgList = Array.isArray(product.images) ? product.images : [];
-      
       if (imgList.length > 1) {
         thumbsContainer.innerHTML = imgList.map((img, idx) => `
           <button type="button" onclick="switchModalImage('${img}')" class="thumb-btn w-14 h-14 rounded-lg overflow-hidden border-2 ${idx === 0 ? 'border-coyote opacity-100' : 'border-stone-800 opacity-60'} hover:opacity-100 transition bg-stone-950 p-1 flex items-center justify-center">
@@ -561,7 +604,6 @@
         thumbsContainer.classList.add("hidden");
       }
 
-      // Color selector handling
       const colorWrapper = document.getElementById("modal-color-wrapper");
       const colorSelect = document.getElementById("modal-selected-color");
       if (product.hasColors && !isSoldOut) {
@@ -571,7 +613,6 @@
         colorWrapper.classList.add("hidden");
       }
 
-      // Custom prompt handling
       const customWrapper = document.getElementById("modal-custom-wrapper");
       const customLabel = document.getElementById("modal-custom-label");
       const customInput = document.getElementById("modal-custom-input");
@@ -583,7 +624,6 @@
         customWrapper.classList.add("hidden");
       }
 
-      // Button states
       const buyBtn = document.getElementById("modal-buy-now-btn");
       const addBtn = document.getElementById("modal-add-cart-btn");
       if (isSoldOut) {
@@ -640,9 +680,7 @@
     function changeCartQty(index, delta) {
       if (!cart[index]) return;
       cart[index].qty += delta;
-      if (cart[index].qty <= 0) {
-        cart.splice(index, 1);
-      }
+      if (cart[index].qty <= 0) cart.splice(index, 1);
       saveCartToStorage();
       updateCartUI();
     }
@@ -805,6 +843,7 @@
     }
 
     renderProducts();
+    loadLiveStock();
     updateCartUI();
     lucide.createIcons();
   </script>
