@@ -176,36 +176,6 @@
               <textarea id="modal-custom-input" rows="2" placeholder="Type custom details here..." class="w-full bg-stone-950 border border-stone-800 rounded-lg px-3 py-2 text-xs text-stone-200 focus:outline-none focus:border-coyote placeholder-stone-600 resize-none"></textarea>
             </div>
 
-            <!-- Interactive Fulfillment Toggle (Product Modal) -->
-            <div id="modal-fulfillment-wrapper" class="pt-3 border-t border-stone-800">
-              <label class="block text-xs font-bold uppercase tracking-wider text-coyote mb-2">
-                Select Fulfillment Method:
-              </label>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <!-- Shipping Button -->
-                <button type="button" onclick="setModalFulfillment('shipping')" id="modal-btn-shipping" class="p-3 rounded-xl border-2 border-coyote bg-stone-950 flex flex-col text-left transition relative">
-                  <div class="flex items-center justify-between w-full">
-                    <span class="text-xs font-bold text-white flex items-center gap-1.5">
-                      <i data-lucide="truck" class="w-4 h-4 text-coyote"></i> Tracked Shipping
-                    </span>
-                    <i data-lucide="check-circle" id="modal-check-shipping" class="w-4 h-4 text-coyote"></i>
-                  </div>
-                  <span class="text-[10px] text-stone-400 mt-1">+$5.99 (USPS / UPS Delivery)</span>
-                </button>
-
-                <!-- Pickup Button -->
-                <button type="button" onclick="setModalFulfillment('pickup')" id="modal-btn-pickup" class="p-3 rounded-xl border-2 border-stone-800 bg-stone-950 flex flex-col text-left opacity-60 transition relative hover:opacity-90">
-                  <div class="flex items-center justify-between w-full">
-                    <span class="text-xs font-bold text-stone-300 flex items-center gap-1.5">
-                      <i data-lucide="map-pin" class="w-4 h-4 text-coyote"></i> Free Local Pickup
-                    </span>
-                    <i data-lucide="circle" id="modal-check-pickup" class="w-4 h-4 text-stone-600"></i>
-                  </div>
-                  <span class="text-[10px] text-stone-400 mt-1">$0.00 (Midland / Odessa)</span>
-                </button>
-              </div>
-            </div>
-
             <!-- Fabrication Policy Note -->
             <div class="bg-stone-950/80 border border-stone-800 rounded-lg p-3 text-[11px] text-stone-400 leading-relaxed">
               <span class="text-stone-300 font-semibold">Custom Order Policy:</span> Custom fabricated on demand. No returns unless damaged upon delivery or lettering error.
@@ -218,7 +188,7 @@
               <i data-lucide="credit-card" class="w-4 h-4"></i> Proceed to Secure Checkout
             </button>
             <button id="modal-add-cart-btn" onclick="modalAddToCart()" class="w-full bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold uppercase tracking-wider py-2.5 px-4 rounded-lg transition text-xs flex justify-center items-center gap-2">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Add to Cart &amp; Continue Browsing
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Save &amp; Add to Cart
             </button>
           </div>
 
@@ -237,57 +207,20 @@
         <div>
           <div class="flex items-center justify-between border-b border-stone-800 pb-4">
             <h2 class="text-lg font-bold text-white flex items-center gap-2 tracking-wide">
-              <i data-lucide="shopping-cart" class="w-5 h-5 text-coyote"></i> Your Cart
+              <i data-lucide="shopping-cart" class="w-5 h-5 text-coyote"></i> Your Saved Cart
             </h2>
             <button onclick="toggleCart()" class="text-stone-400 hover:text-white transition">
               <i data-lucide="x" class="w-6 h-6"></i>
             </button>
           </div>
-          <div id="cart-items" class="divide-y border-b border-stone-800 border-t my-4 overflow-y-auto max-h-[30vh]">
+          <div id="cart-items" class="divide-y border-b border-stone-800 border-t my-4 overflow-y-auto max-h-[48vh]">
             <!-- Cart Items -->
           </div>
         </div>
 
         <div class="border-t border-stone-800 pt-3">
-          
-          <!-- Interactive Fulfillment Toggle (Cart Drawer) -->
-          <div class="bg-stone-950 border border-stone-800 rounded-xl p-3 mb-3 space-y-2">
-            <span class="text-[11px] font-bold text-stone-300 uppercase tracking-wider block">Choose Delivery:</span>
-            <div class="grid grid-cols-1 gap-2">
-              <!-- Cart Shipping Button -->
-              <button type="button" onclick="setCartFulfillment('shipping')" id="cart-btn-shipping" class="p-2.5 rounded-xl border-2 border-coyote bg-stone-900/90 flex items-center justify-between text-left transition">
-                <div class="flex items-center gap-2">
-                  <i data-lucide="truck" class="w-4 h-4 text-coyote"></i>
-                  <div>
-                    <span class="text-xs font-bold text-white block leading-tight">Tracked Shipping</span>
-                    <span class="text-[10px] text-stone-400">3-5 Business Days Delivery</span>
-                  </div>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-bold text-stone-300">+$5.99</span>
-                  <i data-lucide="check-circle" id="cart-check-shipping" class="w-4 h-4 text-coyote"></i>
-                </div>
-              </button>
-
-              <!-- Cart Pickup Button -->
-              <button type="button" onclick="setCartFulfillment('pickup')" id="cart-btn-pickup" class="p-2.5 rounded-xl border-2 border-stone-800 bg-stone-900/40 flex items-center justify-between text-left opacity-60 transition hover:opacity-90">
-                <div class="flex items-center gap-2">
-                  <i data-lucide="map-pin" class="w-4 h-4 text-coyote"></i>
-                  <div>
-                    <span class="text-xs font-bold text-stone-300 block leading-tight">Free Local Pickup / Drop-off</span>
-                    <span class="text-[10px] text-stone-400">Midland &amp; Odessa Area</span>
-                  </div>
-                </div>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-bold text-coyote">FREE</span>
-                  <i data-lucide="circle" id="cart-check-pickup" class="w-4 h-4 text-stone-600"></i>
-                </div>
-              </button>
-            </div>
-          </div>
-
           <div class="flex justify-between text-base font-semibold text-white mb-3">
-            <span>Estimated Total</span>
+            <span>Subtotal</span>
             <span id="cart-subtotal" class="text-coyote font-bold">$0.00</span>
           </div>
 
@@ -297,7 +230,7 @@
               <i data-lucide="info" class="w-3.5 h-3.5"></i> Custom Fabrication Policy
             </div>
             <p>
-              Custom made for each customer. Returns only accepted if damaged upon arrival or lettering mistake made by Deer Camp Designs.
+              Custom made for each customer. Select shipping vs. local pickup on the next secure page.
             </p>
           </div>
 
@@ -312,7 +245,7 @@
   <!-- Toast Notification Container -->
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-coyote/50 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
     <i data-lucide="check-circle" class="w-4 h-4 text-coyote"></i>
-    <span id="toast-message">Email address copied to clipboard!</span>
+    <span id="toast-message">Item saved to cart!</span>
   </div>
 
   <!-- Footer -->
@@ -491,53 +424,33 @@
       }
     ];
 
+    // Load saved cart from localStorage on page visit
     let cart = [];
-    let activeFilter = 'all';
-    let currentModalProduct = null;
-    let selectedModalFulfillment = 'shipping';
-    let selectedCartFulfillment = 'shipping';
-
-    function setModalFulfillment(method) {
-      selectedModalFulfillment = method;
-      const btnShipping = document.getElementById("modal-btn-shipping");
-      const btnPickup = document.getElementById("modal-btn-pickup");
-      const checkShipping = document.getElementById("modal-check-shipping");
-      const checkPickup = document.getElementById("modal-check-pickup");
-
-      if (method === 'shipping') {
-        btnShipping.className = "p-3 rounded-xl border-2 border-coyote bg-stone-950 flex flex-col text-left transition relative opacity-100";
-        btnPickup.className = "p-3 rounded-xl border-2 border-stone-800 bg-stone-950 flex flex-col text-left opacity-60 transition relative hover:opacity-90";
-        checkShipping.outerHTML = '<i data-lucide="check-circle" id="modal-check-shipping" class="w-4 h-4 text-coyote"></i>';
-        checkPickup.outerHTML = '<i data-lucide="circle" id="modal-check-pickup" class="w-4 h-4 text-stone-600"></i>';
-      } else {
-        btnShipping.className = "p-3 rounded-xl border-2 border-stone-800 bg-stone-950 flex flex-col text-left opacity-60 transition relative hover:opacity-90";
-        btnPickup.className = "p-3 rounded-xl border-2 border-coyote bg-stone-950 flex flex-col text-left transition relative opacity-100";
-        checkShipping.outerHTML = '<i data-lucide="circle" id="modal-check-shipping" class="w-4 h-4 text-stone-600"></i>';
-        checkPickup.outerHTML = '<i data-lucide="check-circle" id="modal-check-pickup" class="w-4 h-4 text-coyote"></i>';
+    try {
+      const savedCart = localStorage.getItem('dcd_saved_cart');
+      if (savedCart) {
+        cart = JSON.parse(savedCart);
       }
-      lucide.createIcons();
+    } catch (e) {
+      cart = [];
     }
 
-    function setCartFulfillment(method) {
-      selectedCartFulfillment = method;
-      const btnShipping = document.getElementById("cart-btn-shipping");
-      const btnPickup = document.getElementById("cart-btn-pickup");
-      const checkShipping = document.getElementById("cart-check-shipping");
-      const checkPickup = document.getElementById("cart-check-pickup");
+    // Auto-clear cart if returning from a successful checkout
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      cart = [];
+      localStorage.removeItem('dcd_saved_cart');
+    }
 
-      if (method === 'shipping') {
-        btnShipping.className = "p-2.5 rounded-xl border-2 border-coyote bg-stone-900/90 flex items-center justify-between text-left transition opacity-100";
-        btnPickup.className = "p-2.5 rounded-xl border-2 border-stone-800 bg-stone-900/40 flex items-center justify-between text-left opacity-60 transition hover:opacity-90";
-        checkShipping.outerHTML = '<i data-lucide="check-circle" id="cart-check-shipping" class="w-4 h-4 text-coyote"></i>';
-        checkPickup.outerHTML = '<i data-lucide="circle" id="cart-check-pickup" class="w-4 h-4 text-stone-600"></i>';
-      } else {
-        btnShipping.className = "p-2.5 rounded-xl border-2 border-stone-800 bg-stone-900/40 flex items-center justify-between text-left opacity-60 transition hover:opacity-90";
-        btnPickup.className = "p-2.5 rounded-xl border-2 border-coyote bg-stone-900/90 flex items-center justify-between text-left transition opacity-100";
-        checkShipping.outerHTML = '<i data-lucide="circle" id="cart-check-shipping" class="w-4 h-4 text-stone-600"></i>';
-        checkPickup.outerHTML = '<i data-lucide="check-circle" id="cart-check-pickup" class="w-4 h-4 text-coyote"></i>';
+    let activeFilter = 'all';
+    let currentModalProduct = null;
+
+    function saveCartToStorage() {
+      try {
+        localStorage.setItem('dcd_saved_cart', JSON.stringify(cart));
+      } catch (e) {
+        console.error("Could not save to localStorage", e);
       }
-      updateCartUI();
-      lucide.createIcons();
     }
 
     function getProductImageSrc(p) {
@@ -615,7 +528,7 @@
               </span>
             ` : `
               <span class="bg-stone-800 group-hover:bg-coyote group-hover:text-slatecharcoal text-stone-200 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition flex items-center gap-1.5">
-                View &amp; Buy <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                View &amp; Customize <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
               </span>
             `}
           </div>
@@ -677,19 +590,6 @@
         customWrapper.classList.add("hidden");
       }
 
-      // Reset fulfillment to shipping default
-      setModalFulfillment('shipping');
-
-      // Fulfillment selection visibility
-      const fulfillmentWrapper = document.getElementById("modal-fulfillment-wrapper");
-      if (fulfillmentWrapper) {
-        if (product.soldOut) {
-          fulfillmentWrapper.classList.add("hidden");
-        } else {
-          fulfillmentWrapper.classList.remove("hidden");
-        }
-      }
-
       // Button states
       const buyBtn = document.getElementById("modal-buy-now-btn");
       const addBtn = document.getElementById("modal-add-cart-btn");
@@ -737,9 +637,28 @@
         });
       }
 
+      saveCartToStorage();
       closeProductModal();
       updateCartUI();
+      showToast("Item saved to your cart!");
       toggleCart();
+    }
+
+    function changeCartQty(index, delta) {
+      if (!cart[index]) return;
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCartToStorage();
+      updateCartUI();
+    }
+
+    function removeCartItem(index) {
+      if (!cart[index]) return;
+      cart.splice(index, 1);
+      saveCartToStorage();
+      updateCartUI();
     }
 
     async function directBuyNow() {
@@ -763,23 +682,20 @@
         const response = await fetch('/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            items: singleItemOrder,
-            fulfillmentMethod: selectedModalFulfillment 
-          })
+          body: JSON.stringify({ items: singleItemOrder })
         });
 
         const session = await response.json();
         if (session.url) {
           window.location.href = session.url;
         } else {
-          alert("Error creating checkout session. Ensure the server.js backend is running.");
+          alert("Error creating checkout session.");
           buyBtn.innerText = "Proceed to Secure Checkout";
           buyBtn.disabled = false;
         }
       } catch (err) {
         console.error(err);
-        alert("Backend not reachable. Ensure 'node server.js' is running.");
+        alert("Backend not reachable.");
         buyBtn.innerText = "Proceed to Secure Checkout";
         buyBtn.disabled = false;
       }
@@ -833,27 +749,33 @@
       const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
       const itemsSubtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
-      const shippingAmount = (selectedCartFulfillment === 'shipping' && totalCount > 0) ? 5.99 : 0.00;
-
       cartCount.innerText = totalCount;
-      subtotalEl.innerText = `$${(itemsSubtotal + shippingAmount).toFixed(2)}`;
+      subtotalEl.innerText = `$${itemsSubtotal.toFixed(2)}`;
 
       if (cart.length === 0) {
         cartContainer.innerHTML = `<p class="text-stone-500 text-sm py-8 text-center">Your cart is currently empty.</p>`;
         return;
       }
 
-      cartContainer.innerHTML = cart.map(item => `
+      cartContainer.innerHTML = cart.map((item, idx) => `
         <div class="py-3 flex justify-between items-start">
-          <div class="pr-2">
-            <p class="text-sm font-bold text-stone-200">${item.name}</p>
-            ${item.selectedColor ? `<p class="text-xs text-coyote mt-0.5 font-medium">Color: ${item.selectedColor}</p>` : ''}
-            ${item.customNote ? `<p class="text-xs text-stone-400 mt-0.5 italic">Inscription: "${item.customNote}"</p>` : ''}
-            <p class="text-xs text-stone-500 mt-0.5">$${item.price.toFixed(2)} × ${item.qty}</p>
+          <div class="pr-2 max-w-[70%]">
+            <p class="text-xs font-bold text-stone-200">${item.name}</p>
+            ${item.selectedColor ? `<p class="text-[11px] text-coyote mt-0.5 font-medium">Color: ${item.selectedColor}</p>` : ''}
+            ${item.customNote ? `<p class="text-[11px] text-stone-400 mt-0.5 italic">"${item.customNote}"</p>` : ''}
+            <div class="flex items-center gap-2 mt-2">
+              <div class="flex items-center border border-stone-800 rounded-md bg-stone-950">
+                <button onclick="changeCartQty(${idx}, -1)" class="px-2 py-0.5 text-stone-400 hover:text-white text-xs">-</button>
+                <span class="px-2 text-xs font-bold text-stone-200">${item.qty}</span>
+                <button onclick="changeCartQty(${idx}, 1)" class="px-2 py-0.5 text-stone-400 hover:text-white text-xs">+</button>
+              </div>
+              <button onclick="removeCartItem(${idx})" class="text-stone-500 hover:text-red-400 transition text-[11px] underline">Remove</button>
+            </div>
           </div>
-          <span class="text-sm font-bold text-coyote">$${(item.price * item.qty).toFixed(2)}</span>
+          <span class="text-xs font-bold text-coyote">$${(item.price * item.qty).toFixed(2)}</span>
         </div>
       `).join("");
+      lucide.createIcons();
     }
 
     async function proceedToCheckout() {
@@ -870,29 +792,27 @@
         const response = await fetch('/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            items: cart,
-            fulfillmentMethod: selectedCartFulfillment
-          })
+          body: JSON.stringify({ items: cart })
         });
 
         const session = await response.json();
         if (session.url) {
           window.location.href = session.url;
         } else {
-          alert("Error creating checkout session. Ensure the server.js backend is running.");
+          alert("Error creating checkout session.");
           checkoutBtn.innerText = "Proceed to Secure Checkout";
           checkoutBtn.disabled = false;
         }
       } catch (err) {
         console.error(err);
-        alert("Backend not reachable. Ensure 'node server.js' is running.");
+        alert("Backend not reachable.");
         checkoutBtn.innerText = "Proceed to Secure Checkout";
         checkoutBtn.disabled = false;
       }
     }
 
     renderProducts();
+    updateCartUI();
     lucide.createIcons();
   </script>
 </body>
