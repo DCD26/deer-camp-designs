@@ -477,7 +477,9 @@
           <div onclick="openProductModal('${p.id}')" class="bg-stone-900/60 border ${isSoldOut ? 'border-stone-800/50 opacity-75' : 'border-stone-800/90 hover:border-coyote/50'} rounded-xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl group relative cursor-pointer">
             <div>
               <div class="w-full h-52 bg-stone-950/90 rounded-lg mb-5 flex items-center justify-center border border-stone-800/80 group-hover:border-coyote/30 transition relative overflow-hidden">
-                ${renderImageHTML(p, false)}${isSoldOut ? `
+                ${renderImageHTML(p, false)}
+                
+                ${isSoldOut ? `
                   <div class="absolute inset-0 bg-black/65 backdrop-blur-[2px] flex items-center justify-center">
                     <span class="bg-stone-900 border border-stone-700 text-stone-300 text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5">
                       <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-500"></i> Sold Out
@@ -487,8 +489,324 @@
               </div>
 
               <div class="flex items-center justify-between gap-2">
-                <span class="text-[11px] text-coyote font-bold bg-coyote/10 px-2.5 py-1 rounded border border-coyote/20 uppercase tracking-wider">${p.badge}</span>${renderStockBadgeHTML(p.stock)}
+                <span class="text-[11px] text-coyote font-bold bg-coyote/10 px-2.5 py-1 rounded border border-coyote/20 uppercase tracking-wider">${p.badge}</span>
+                ${renderStockBadgeHTML(p.stock)}
               </div>
 
               <h3 class="text-xl font-bold text-white mt-3 group-hover:text-coyote transition">${p.name}</h3>
-              <p class="text-sm text
+              <p class="text-sm text-stone-400 mt-2 leading-relaxed line-clamp-2">${p.description}</p>
+            </div>
+
+            <div class="mt-6 flex items-center justify-between pt-5 border-t border-stone-800/80">
+              <span class="text-2xl font-black ${isSoldOut ? 'text-stone-500' : 'text-stone-100'}">$${p.price.toFixed(2)}</span>
+              
+              ${isSoldOut ? `
+                <span class="bg-stone-950 border border-stone-800 text-stone-500 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">
+                  Sold Out
+                </span>
+              ` : `
+                <span class="bg-stone-800 group-hover:bg-coyote group-hover:text-slatecharcoal text-stone-200 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition flex items-center gap-1.5">
+                  View &amp; Customize <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </span>
+              `}
+            </div>
+          </div>
+        `;
+      }).join("");
+      lucide.createIcons();
+    }
+
+    function openProductModal(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      currentModalProduct = product;
+      const isSoldOut = (product.stock <= 0);
+
+      document.getElementById("modal-product-title").innerText = product.name;
+      document.getElementById("modal-product-category").innerText = product.category;
+      document.getElementById("modal-product-price").innerText = `$${product.price.toFixed(2)}`;
+      document.getElementById("modal-product-description").innerText = product.description;
+      document.getElementById("modal-product-badge").innerText = product.badge;
+
+      // Stock badge inside modal
+      const stockBadge = document.getElementById("modal-stock-badge");
+      if (isSoldOut) {
+        stockBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md border text-amber-400 bg-amber-500/10 border-amber-500/20";
+        stockBadge.innerText = "0 Available (Sold Out)";
+      } else if (product.stock <= 3) {
+        stockBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md border text-amber-400 bg-amber-500/10 border-amber-500/20";
+        stockBadge.innerText = `Only ${product.stock} left in stock!`;
+      } else {
+        stockBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md border text-emerald-400 bg-emerald-500/10 border-emerald-500/20";
+        stockBadge.innerText = `${product.stock} units available`;
+      }
+
+      // Update Large Image in Modal
+      const imgContainer = document.getElementById("modal-image-container");
+      imgContainer.innerHTML = renderImageHTML(product, true);
+
+      // Handle Thumbnails
+      const thumbsContainer = document.getElementById("modal-thumbnails-container");
+      const imgList = Array.isArray(product.images) ? product.images : [];
+      
+      if (imgList.length > 1) {
+        thumbsContainer.innerHTML = imgList.map((img, idx) => `
+          <button type="button" onclick="switchModalImage('${img}')" class="thumb-btn w-14 h-14 rounded-lg overflow-hidden border-2 ${idx === 0 ? 'border-coyote opacity-100' : 'border-stone-800 opacity-60'} hover:opacity-100 transition bg-stone-950 p-1 flex items-center justify-center">
+            <img src="${img}" class="w-full h-full object-cover rounded" />
+          </button>
+        `).join('');
+        thumbsContainer.classList.remove("hidden");
+      } else {
+        thumbsContainer.innerHTML = "";
+        thumbsContainer.classList.add("hidden");
+      }
+
+      // Color selector handling
+      const colorWrapper = document.getElementById("modal-color-wrapper");
+      const colorSelect = document.getElementById("modal-selected-color");
+      if (product.hasColors && !isSoldOut) {
+        colorSelect.innerHTML = product.colors.map(c => `<option value="${c}">${c}</option>`).join('');
+        colorWrapper.classList.remove("hidden");
+      } else {
+        colorWrapper.classList.add("hidden");
+      }
+
+      // Custom prompt handling
+      const customWrapper = document.getElementById("modal-custom-wrapper");
+      const customLabel = document.getElementById("modal-custom-label");
+      const customInput = document.getElementById("modal-custom-input");
+      customInput.value = "";
+      if (product.customizable && !isSoldOut) {
+        customLabel.innerText = product.customPrompt || "Custom Details:";
+        customWrapper.classList.remove("hidden");
+      } else {
+        customWrapper.classList.add("hidden");
+      }
+
+      // Button states
+      const buyBtn = document.getElementById("modal-buy-now-btn");
+      const addBtn = document.getElementById("modal-add-cart-btn");
+      if (isSoldOut) {
+        buyBtn.disabled = true;
+        buyBtn.innerText = "Item Currently Sold Out";
+        buyBtn.classList.add("opacity-50", "cursor-not-allowed");
+        addBtn.classList.add("hidden");
+      } else {
+        buyBtn.disabled = false;
+        buyBtn.innerHTML = `<i data-lucide="credit-card" class="w-4 h-4"></i> Proceed to Secure Checkout`;
+        buyBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        addBtn.classList.remove("hidden");
+      }
+
+      document.getElementById("product-detail-modal").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeProductModal() {
+      document.getElementById("product-detail-modal").classList.add("hidden");
+      currentModalProduct = null;
+    }
+
+    function modalAddToCart() {
+      if (!currentModalProduct || currentModalProduct.stock <= 0) return;
+
+      const customNote = currentModalProduct.customizable ? document.getElementById("modal-custom-input").value.trim() : "";
+      const selectedColor = currentModalProduct.hasColors ? document.getElementById("modal-selected-color").value : "";
+
+      const existing = cart.find(c => 
+        c.id === currentModalProduct.id && 
+        c.customNote === customNote && 
+        c.selectedColor === selectedColor
+      );
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ 
+          ...currentModalProduct, 
+          qty: 1, 
+          customNote: customNote,
+          selectedColor: selectedColor 
+        });
+      }
+
+      saveCartToStorage();
+      closeProductModal();
+      updateCartUI();
+      showToast("Item saved to your cart!");
+      toggleCart();
+    }
+
+    function changeCartQty(index, delta) {
+      if (!cart[index]) return;
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCartToStorage();
+      updateCartUI();
+    }
+
+    function removeCartItem(index) {
+      if (!cart[index]) return;
+      cart.splice(index, 1);
+      saveCartToStorage();
+      updateCartUI();
+    }
+
+    async function directBuyNow() {
+      if (!currentModalProduct || currentModalProduct.stock <= 0) return;
+
+      const customNote = currentModalProduct.customizable ? document.getElementById("modal-custom-input").value.trim() : "";
+      const selectedColor = currentModalProduct.hasColors ? document.getElementById("modal-selected-color").value : "";
+
+      const buyBtn = document.getElementById("modal-buy-now-btn");
+      buyBtn.innerText = "Connecting to Stripe...";
+      buyBtn.disabled = true;
+
+      const singleItemOrder = [{
+        ...currentModalProduct,
+        qty: 1,
+        customNote: customNote,
+        selectedColor: selectedColor
+      }];
+
+      try {
+        const response = await fetch('/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: singleItemOrder })
+        });
+
+        const session = await response.json();
+        if (session.url) {
+          window.location.href = session.url;
+        } else {
+          alert("Error creating checkout session.");
+          buyBtn.innerText = "Proceed to Secure Checkout";
+          buyBtn.disabled = false;
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Backend not reachable.");
+        buyBtn.innerText = "Proceed to Secure Checkout";
+        buyBtn.disabled = false;
+      }
+    }
+
+    function filterCatalog(category) {
+      activeFilter = category;
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.remove("bg-coyote", "text-slatecharcoal");
+        btn.classList.add("bg-stone-900", "text-stone-400");
+      });
+      if (event && event.target && event.target.classList.contains("filter-btn")) {
+        event.target.classList.add("bg-coyote", "text-slatecharcoal");
+        event.target.classList.remove("bg-stone-900", "text-stone-400");
+      }
+      renderProducts();
+    }
+
+    function toggleCart() {
+      document.getElementById("cart-drawer").classList.toggle("hidden");
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.remove('hidden');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      const toastMsg = document.getElementById("toast-message");
+      toastMsg.innerText = msg;
+      toast.classList.remove("opacity-0", "pointer-events-none");
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "pointer-events-none");
+      }, 3000);
+    }
+
+    function copyEmailFallback(e) {
+      navigator.clipboard.writeText("deercampdesigns@outlook.com");
+      showToast("Email address copied: deercampdesigns@outlook.com");
+    }
+
+    function updateCartUI() {
+      const cartContainer = document.getElementById("cart-items");
+      const cartCount = document.getElementById("cart-count");
+      const subtotalEl = document.getElementById("cart-subtotal");
+
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      const itemsSubtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+      cartCount.innerText = totalCount;
+      subtotalEl.innerText = `$${itemsSubtotal.toFixed(2)}`;
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = `<p class="text-stone-500 text-sm py-8 text-center">Your cart is currently empty.</p>`;
+        return;
+      }
+
+      cartContainer.innerHTML = cart.map((item, idx) => `
+        <div class="py-3 flex justify-between items-start">
+          <div class="pr-2 max-w-[70%]">
+            <p class="text-xs font-bold text-stone-200">${item.name}</p>
+            ${item.selectedColor ? `<p class="text-[11px] text-coyote mt-0.5 font-medium">Color: ${item.selectedColor}</p>` : ''}
+            ${item.customNote ? `<p class="text-[11px] text-stone-400 mt-0.5 italic">"${item.customNote}"</p>` : ''}
+            <div class="flex items-center gap-2 mt-2">
+              <div class="flex items-center border border-stone-800 rounded-md bg-stone-950">
+                <button onclick="changeCartQty(${idx}, -1)" class="px-2 py-0.5 text-stone-400 hover:text-white text-xs">-</button>
+                <span class="px-2 text-xs font-bold text-stone-200">${item.qty}</span>
+                <button onclick="changeCartQty(${idx}, 1)" class="px-2 py-0.5 text-stone-400 hover:text-white text-xs">+</button>
+              </div>
+              <button onclick="removeCartItem(${idx})" class="text-stone-500 hover:text-red-400 transition text-[11px] underline">Remove</button>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-coyote">$${(item.price * item.qty).toFixed(2)}</span>
+        </div>
+      `).join("");
+      lucide.createIcons();
+    }
+
+    async function proceedToCheckout() {
+      if (cart.length === 0) {
+        alert("Please add items to your cart before checking out.");
+        return;
+      }
+
+      const checkoutBtn = document.getElementById("checkout-btn");
+      checkoutBtn.innerText = "Connecting to Stripe...";
+      checkoutBtn.disabled = true;
+
+      try {
+        const response = await fetch('/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: cart })
+        });
+
+        const session = await response.json();
+        if (session.url) {
+          window.location.href = session.url;
+        } else {
+          alert("Error creating checkout session.");
+          checkoutBtn.innerText = "Proceed to Secure Checkout";
+          checkoutBtn.disabled = false;
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Backend not reachable.");
+        checkoutBtn.innerText = "Proceed to Secure Checkout";
+        checkoutBtn.disabled = false;
+      }
+    }
+
+    renderProducts();
+    updateCartUI();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
