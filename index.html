@@ -34,7 +34,15 @@
     <span class="hidden sm:inline text-stone-600">|</span>
     <div class="flex items-center gap-1 text-coyote font-semibold">
       <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-      <span>Free Local Pickup / Drop-off in Midland &amp; Odessa available at checkout!</span>
+      <span>Free Local Pickup / Drop-off in Midland &amp; Odessa</span>
+    </div>
+  </div>
+
+  <!-- Prominent "Sales Temporarily On Hold" Notice Banner -->
+  <div class="bg-amber-950/80 border-b border-amber-600/40 text-amber-200 py-3.5 px-4 text-center shadow-lg">
+    <div class="max-w-4xl mx-auto flex items-center justify-center gap-2.5 text-xs sm:text-sm font-semibold tracking-wide">
+      <i data-lucide="pause-circle" class="w-5 h-5 text-amber-400 shrink-0"></i>
+      <span><strong>Notice:</strong> Online orders are temporarily on hold while we catch up on current production and restock materials. Inquiries are still welcome via email!</span>
     </div>
   </div>
 
@@ -56,6 +64,9 @@
         <button onclick="filterCatalog('awards')" class="hover:text-coyote transition">Military &amp; PCS Awards</button>
         <button onclick="filterCatalog('frames')" class="hover:text-coyote transition">Hunt Memory Photos</button>
         <button onclick="filterCatalog('functional')" class="hover:text-coyote transition">Field Gear &amp; 3D Prints</button>
+        <a href="#how-to-guide" class="hover:text-coyote transition flex items-center gap-1">
+          <i data-lucide="play-circle" class="w-4 h-4 text-coyote"></i> How-To Guide
+        </a>
       </nav>
 
       <!-- Action Buttons -->
@@ -111,6 +122,34 @@
     </div>
   </main>
 
+  <!-- How-To Bow Holder Installation Video Section -->
+  <section id="how-to-guide" class="py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto border-t border-stone-800/80">
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 text-coyote font-semibold tracking-widest text-xs uppercase bg-coyote/10 px-3.5 py-1.5 rounded-full border border-coyote/30 mb-3">
+        <i data-lucide="video" class="w-4 h-4"></i> Installation Guide
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
+        How To Install Your Bow Holder
+      </h2>
+      <p class="mt-2 text-stone-400 text-sm max-w-xl mx-auto">
+        Watch this quick walkthrough to mount your 3D printed bow holder securely to your vehicle headrest.
+      </p>
+    </div>
+
+    <!-- Video Container -->
+    <div class="w-full rounded-2xl overflow-hidden border border-stone-800 bg-stone-950 shadow-2xl relative flex justify-center items-center">
+      <video 
+        controls 
+        playsinline
+        preload="metadata"
+        poster="bow-holder.jpg"
+        class="w-full max-h-[580px] object-contain rounded-2xl bg-black">
+        <source src="bow-holder-guide.mp4" type="video/mp4">
+        Your browser does not support playing this video format.
+      </video>
+    </div>
+  </section>
+
   <!-- Expanded Product Checkout & Large Image Modal -->
   <div id="product-detail-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
     <div class="bg-stone-900 border border-stone-800 rounded-2xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden my-auto">
@@ -154,9 +193,16 @@
             <div>
               <div class="flex items-center justify-between">
                 <span id="modal-product-price" class="text-3xl font-black text-white">$0.00</span>
-                <span id="modal-stock-badge" class="text-xs font-bold px-2.5 py-1 rounded-md border"></span>
+                <span id="modal-stock-badge" class="text-xs font-bold px-2.5 py-1 rounded-md border text-amber-400 bg-amber-500/10 border-amber-500/20">0 Available (On Hold)</span>
               </div>
               <p id="modal-product-description" class="text-sm text-stone-300 mt-2 leading-relaxed"></p>
+
+              <!-- Video shortcut link if viewing the bow holder -->
+              <div id="modal-video-link-container" class="hidden mt-3">
+                <a href="#how-to-guide" onclick="closeProductModal()" class="inline-flex items-center gap-2 text-xs font-bold text-coyote bg-coyote/10 hover:bg-coyote/20 border border-coyote/30 px-3 py-1.5 rounded-lg transition">
+                  <i data-lucide="play-circle" class="w-4 h-4"></i> Watch Video: Installation Guide
+                </a>
+              </div>
             </div>
 
             <!-- Color Options -->
@@ -181,18 +227,16 @@
 
             <!-- Fabrication Policy Note -->
             <div class="bg-stone-950/80 border border-stone-800 rounded-lg p-3 text-[11px] text-stone-400 leading-relaxed">
-              <span class="text-stone-300 font-semibold">Custom Order Policy:</span> Custom fabricated on demand. No returns unless damaged upon delivery or lettering error.
+              <span class="text-amber-400 font-semibold">Store Status:</span> Sales are temporarily on hold. Check back soon for restocked availability!
             </div>
           </div>
 
           <!-- Checkout Actions -->
           <div class="space-y-2 pt-3 border-t border-stone-800">
-            <button id="modal-buy-now-btn" onclick="directBuyNow()" class="w-full bg-coyote hover:bg-coyote-dark text-slatecharcoal font-black uppercase tracking-wider py-3.5 px-4 rounded-lg shadow-lg transition flex justify-center items-center gap-2">
-              <i data-lucide="credit-card" class="w-4 h-4"></i> Proceed to Secure Checkout
+            <button id="modal-buy-now-btn" disabled class="w-full bg-stone-800 text-stone-500 font-black uppercase tracking-wider py-3.5 px-4 rounded-lg shadow-lg cursor-not-allowed flex justify-center items-center gap-2">
+              <i data-lucide="clock" class="w-4 h-4"></i> Orders Temporarily On Hold
             </button>
-            <button id="modal-add-cart-btn" onclick="modalAddToCart()" class="w-full bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold uppercase tracking-wider py-2.5 px-4 rounded-lg transition text-xs flex justify-center items-center gap-2">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Save &amp; Add to Cart
-            </button>
+            <button id="modal-add-cart-btn" class="hidden"></button>
           </div>
 
         </div>
@@ -227,18 +271,18 @@
             <span id="cart-subtotal" class="text-coyote font-bold">$0.00</span>
           </div>
 
-          <!-- Custom Orders Returns & Exchanges Policy Disclaimer -->
-          <div class="bg-stone-950/90 border border-stone-800/80 rounded-lg p-2.5 mb-3 text-[11px] text-stone-400 leading-relaxed">
-            <div class="flex items-center gap-1.5 text-coyote font-bold mb-1 uppercase tracking-wider text-[10px]">
-              <i data-lucide="info" class="w-3.5 h-3.5"></i> Custom Fabrication Policy
+          <!-- On Hold Cart Notice -->
+          <div class="bg-amber-950/60 border border-amber-800/60 rounded-lg p-2.5 mb-3 text-[11px] text-amber-200 leading-relaxed">
+            <div class="flex items-center gap-1.5 font-bold mb-1 uppercase tracking-wider text-[10px] text-amber-300">
+              <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> Ordering Paused
             </div>
             <p>
-              Custom made for each customer. Select shipping vs. local pickup on the next secure page.
+              Checkout is paused while we fulfill existing orders. Items in your cart remain saved.
             </p>
           </div>
 
-          <button onclick="proceedToCheckout()" id="checkout-btn" class="w-full bg-coyote hover:bg-coyote-dark text-slatecharcoal font-black uppercase tracking-wider py-3.5 px-4 rounded-lg shadow-lg transition flex justify-center items-center gap-2">
-            Proceed to Secure Checkout
+          <button id="checkout-btn" disabled class="w-full bg-stone-800 text-stone-500 font-black uppercase tracking-wider py-3.5 px-4 rounded-lg shadow-lg cursor-not-allowed flex justify-center items-center gap-2">
+            Checkout Currently Paused
           </button>
         </div>
       </div>
@@ -248,7 +292,7 @@
   <!-- Toast Notification Container -->
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 border border-coyote/50 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
     <i data-lucide="check-circle" class="w-4 h-4 text-coyote"></i>
-    <span id="toast-message">Item saved to cart!</span>
+    <span id="toast-message">Notification</span>
   </div>
 
   <!-- Footer -->
@@ -355,6 +399,7 @@
 
   <!-- Store Logic & Cart Management -->
   <script>
+    // All stock set to 0 to put sales on hold
     const products = [
       {
         id: "prod_pcs_plaque_01",
@@ -401,15 +446,16 @@
         id: "prod_bow_holder",
         name: "Vehicle Headrest Bow Holder",
         category: "functional",
-        price: 24.99,
+        price: 15.99,
         stock: 0,
         badge: "3D Printed Bow Holder",
-        images: ["bow-holder-1.jpg", "bow-holder-2.jpg"],
+        images: ["bow-holder.jpg"],
         icon: "compass",
         hasColors: true,
         colors: ["Black", "Tan", "Brown"],
         customizable: false,
-        description: "Transport your boweasily with this 3D printed bow holder that attaches to your headrest."
+        hasVideoGuide: true,
+        description: "Transport your Matthews Lift and Lift X Models easily with this 3D printed bow holder that attaches to your headrest."
       },
       {
         id: "prod_gear_organizer_02",
@@ -444,22 +490,6 @@
     let activeFilter = 'all';
     let currentModalProduct = null;
 
-    // Fetch live inventory from server
-    async function loadLiveStock() {
-      try {
-        const res = await fetch('/api/stock');
-        const liveStock = await res.json();
-        products.forEach(p => {
-          if (liveStock[p.id] !== undefined) {
-            p.stock = liveStock[p.id];
-          }
-        });
-        renderProducts();
-      } catch (err) {
-        console.log("Using default stock numbers.");
-      }
-    }
-
     function saveCartToStorage() {
       try {
         localStorage.setItem('dcd_saved_cart', JSON.stringify(cart));
@@ -476,24 +506,17 @@
     }
 
     function renderStockBadgeHTML(stock) {
-      if (stock <= 0) {
-        return `<span class="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">0 Available (Restocking)</span>`;
-      } else if (stock <= 3) {
-        return `<span class="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">Only ${stock} Left!</span>`;
-      } else {
-        return `<span class="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${stock} Available</span>`;
-      }
+      return `<span class="text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">0 Available (Restocking)</span>`;
     }
 
     function renderImageHTML(p, isLarge = false, explicitSrc = null) {
       const src = explicitSrc || getProductImageSrc(p);
-      const isSoldOut = (p.stock <= 0);
       if (src) {
         return `<img id="${isLarge ? 'modal-active-img' : ''}" src="${src}" alt="${p.name}" class="${isLarge ? 'w-full h-full object-contain' : 'w-full h-full object-cover'} transition-transform duration-300 group-hover:scale-125" />`;
       }
       return `
         <div class="transition-transform duration-300 group-hover:scale-125 flex flex-col items-center justify-center">
-          <i data-lucide="${p.icon}" class="${isLarge ? 'w-28 h-28' : 'w-16 h-16'} ${isSoldOut ? 'text-stone-600' : 'text-coyote opacity-85'} mb-2"></i>
+          <i data-lucide="${p.icon}" class="${isLarge ? 'w-28 h-28' : 'w-16 h-16'} text-stone-600 mb-2"></i>
           ${!isLarge ? `<span class="text-[10px] uppercase tracking-widest font-black text-stone-500">${p.category}</span>` : ''}
         </div>
       `;
@@ -518,48 +541,36 @@
         ? products 
         : products.filter(p => p.category === activeFilter);
 
-      grid.innerHTML = filtered.map(p => {
-        const isSoldOut = (p.stock <= 0);
-        return `
-          <div onclick="openProductModal('${p.id}')" class="bg-stone-900/60 border ${isSoldOut ? 'border-stone-800/50 opacity-75' : 'border-stone-800/90 hover:border-coyote/50'} rounded-xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl group relative cursor-pointer">
-            <div>
-              <div class="w-full h-52 bg-stone-950/90 rounded-lg mb-5 flex items-center justify-center border border-stone-800/80 group-hover:border-coyote/30 transition relative overflow-hidden">
-                ${renderImageHTML(p, false)}
-                
-                ${isSoldOut ? `
-                  <div class="absolute inset-0 bg-black/65 backdrop-blur-[2px] flex items-center justify-center">
-                    <span class="bg-stone-900 border border-stone-700 text-stone-300 text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5">
-                      <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-500"></i> Sold Out
-                    </span>
-                  </div>
-                ` : ''}
-              </div>
-
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-[11px] text-coyote font-bold bg-coyote/10 px-2.5 py-1 rounded border border-coyote/20 uppercase tracking-wider">${p.badge}</span>
-                ${renderStockBadgeHTML(p.stock)}
-              </div>
-
-              <h3 class="text-xl font-bold text-white mt-3 group-hover:text-coyote transition">${p.name}</h3>
-              <p class="text-sm text-stone-400 mt-2 leading-relaxed line-clamp-2">${p.description}</p>
-            </div>
-
-            <div class="mt-6 flex items-center justify-between pt-5 border-t border-stone-800/80">
-              <span class="text-2xl font-black ${isSoldOut ? 'text-stone-500' : 'text-stone-100'}">$${p.price.toFixed(2)}</span>
+      grid.innerHTML = filtered.map(p => `
+        <div onclick="openProductModal('${p.id}')" class="bg-stone-900/60 border border-stone-800/50 opacity-80 rounded-xl p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-xl group relative cursor-pointer">
+          <div>
+            <div class="w-full h-52 bg-stone-950/90 rounded-lg mb-5 flex items-center justify-center border border-stone-800/80 group-hover:border-coyote/30 transition relative overflow-hidden">
+              ${renderImageHTML(p, false)}
               
-              ${isSoldOut ? `
-                <span class="bg-stone-950 border border-stone-800 text-stone-500 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">
-                  Sold Out
+              <div class="absolute inset-0 bg-black/65 backdrop-blur-[2px] flex items-center justify-center">
+                <span class="bg-stone-900 border border-stone-700 text-stone-300 text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-md shadow-lg flex items-center gap-1.5">
+                  <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-500"></i> Awaiting Restock
                 </span>
-              ` : `
-                <span class="bg-stone-800 group-hover:bg-coyote group-hover:text-slatecharcoal text-stone-200 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition flex items-center gap-1.5">
-                  View &amp; Customize <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-                </span>
-              `}
+              </div>
             </div>
+
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] text-coyote font-bold bg-coyote/10 px-2.5 py-1 rounded border border-coyote/20 uppercase tracking-wider">${p.badge}</span>
+              ${renderStockBadgeHTML(p.stock)}
+            </div>
+
+            <h3 class="text-xl font-bold text-white mt-3 group-hover:text-coyote transition">${p.name}</h3>
+            <p class="text-sm text-stone-400 mt-2 leading-relaxed line-clamp-2">${p.description}</p>
           </div>
-        `;
-      }).join("");
+
+          <div class="mt-6 flex items-center justify-between pt-5 border-t border-stone-800/80">
+            <span class="text-2xl font-black text-stone-500">$${p.price.toFixed(2)}</span>
+            <span class="bg-stone-950 border border-stone-800 text-stone-500 px-3.5 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">
+              Awaiting Restock
+            </span>
+          </div>
+        </div>
+      `).join("");
       lucide.createIcons();
     }
 
@@ -567,7 +578,6 @@
       const product = products.find(p => p.id === productId);
       if (!product) return;
       currentModalProduct = product;
-      const isSoldOut = (product.stock <= 0);
 
       document.getElementById("modal-product-title").innerText = product.name;
       document.getElementById("modal-product-category").innerText = product.category;
@@ -575,16 +585,12 @@
       document.getElementById("modal-product-description").innerText = product.description;
       document.getElementById("modal-product-badge").innerText = product.badge;
 
-      const stockBadge = document.getElementById("modal-stock-badge");
-      if (isSoldOut) {
-        stockBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md border text-amber-400 bg-amber-500/10 border-amber-500/20";
-        stockBadge.innerText = "0 Available (Sold Out)";
-      } else if (product.stock <= 3) {
-        stockBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md border text-amber-400 bg-amber-500/10 border-amber-500/20";
-        stockBadge.innerText = `Only ${product.stock} left in stock!`;
+      // Video link toggle inside modal
+      const videoLink = document.getElementById("modal-video-link-container");
+      if (product.hasVideoGuide) {
+        videoLink.classList.remove("hidden");
       } else {
-        stockBadge.className = "text-xs font-bold px-2.5 py-1 rounded-md border text-emerald-400 bg-emerald-500/10 border-emerald-500/20";
-        stockBadge.innerText = `${product.stock} units available`;
+        videoLink.classList.add("hidden");
       }
 
       const imgContainer = document.getElementById("modal-image-container");
@@ -604,39 +610,8 @@
         thumbsContainer.classList.add("hidden");
       }
 
-      const colorWrapper = document.getElementById("modal-color-wrapper");
-      const colorSelect = document.getElementById("modal-selected-color");
-      if (product.hasColors && !isSoldOut) {
-        colorSelect.innerHTML = product.colors.map(c => `<option value="${c}">${c}</option>`).join('');
-        colorWrapper.classList.remove("hidden");
-      } else {
-        colorWrapper.classList.add("hidden");
-      }
-
-      const customWrapper = document.getElementById("modal-custom-wrapper");
-      const customLabel = document.getElementById("modal-custom-label");
-      const customInput = document.getElementById("modal-custom-input");
-      customInput.value = "";
-      if (product.customizable && !isSoldOut) {
-        customLabel.innerText = product.customPrompt || "Custom Details:";
-        customWrapper.classList.remove("hidden");
-      } else {
-        customWrapper.classList.add("hidden");
-      }
-
-      const buyBtn = document.getElementById("modal-buy-now-btn");
-      const addBtn = document.getElementById("modal-add-cart-btn");
-      if (isSoldOut) {
-        buyBtn.disabled = true;
-        buyBtn.innerText = "Item Currently Sold Out";
-        buyBtn.classList.add("opacity-50", "cursor-not-allowed");
-        addBtn.classList.add("hidden");
-      } else {
-        buyBtn.disabled = false;
-        buyBtn.innerHTML = `<i data-lucide="credit-card" class="w-4 h-4"></i> Proceed to Secure Checkout`;
-        buyBtn.classList.remove("opacity-50", "cursor-not-allowed");
-        addBtn.classList.remove("hidden");
-      }
+      document.getElementById("modal-color-wrapper").classList.add("hidden");
+      document.getElementById("modal-custom-wrapper").classList.add("hidden");
 
       document.getElementById("product-detail-modal").classList.remove("hidden");
       lucide.createIcons();
@@ -645,91 +620,6 @@
     function closeProductModal() {
       document.getElementById("product-detail-modal").classList.add("hidden");
       currentModalProduct = null;
-    }
-
-    function modalAddToCart() {
-      if (!currentModalProduct || currentModalProduct.stock <= 0) return;
-
-      const customNote = currentModalProduct.customizable ? document.getElementById("modal-custom-input").value.trim() : "";
-      const selectedColor = currentModalProduct.hasColors ? document.getElementById("modal-selected-color").value : "";
-
-      const existing = cart.find(c => 
-        c.id === currentModalProduct.id && 
-        c.customNote === customNote && 
-        c.selectedColor === selectedColor
-      );
-
-      if (existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ 
-          ...currentModalProduct, 
-          qty: 1, 
-          customNote: customNote,
-          selectedColor: selectedColor 
-        });
-      }
-
-      saveCartToStorage();
-      closeProductModal();
-      updateCartUI();
-      showToast("Item saved to your cart!");
-      toggleCart();
-    }
-
-    function changeCartQty(index, delta) {
-      if (!cart[index]) return;
-      cart[index].qty += delta;
-      if (cart[index].qty <= 0) cart.splice(index, 1);
-      saveCartToStorage();
-      updateCartUI();
-    }
-
-    function removeCartItem(index) {
-      if (!cart[index]) return;
-      cart.splice(index, 1);
-      saveCartToStorage();
-      updateCartUI();
-    }
-
-    async function directBuyNow() {
-      if (!currentModalProduct || currentModalProduct.stock <= 0) return;
-
-      const customNote = currentModalProduct.customizable ? document.getElementById("modal-custom-input").value.trim() : "";
-      const selectedColor = currentModalProduct.hasColors ? document.getElementById("modal-selected-color").value : "";
-
-      const buyBtn = document.getElementById("modal-buy-now-btn");
-      buyBtn.innerText = "Connecting to Stripe...";
-      buyBtn.disabled = true;
-
-      const singleItemOrder = [{
-        ...currentModalProduct,
-        qty: 1,
-        customNote: customNote,
-        selectedColor: selectedColor
-      }];
-
-      try {
-        const response = await fetch('/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: singleItemOrder })
-        });
-
-        const session = await response.json();
-        if (session.url) {
-          window.location.href = session.url;
-        } else {
-          alert("Error creating checkout session.");
-          buyBtn.innerText = "Proceed to Secure Checkout";
-          buyBtn.disabled = false;
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Backend not reachable.");
-        buyBtn.innerText = "Proceed to Secure Checkout";
-        buyBtn.disabled = false;
-      }
     }
 
     function filterCatalog(category) {
@@ -772,6 +662,21 @@
       showToast("Email address copied: deercampdesigns@outlook.com");
     }
 
+    function changeCartQty(index, delta) {
+      if (!cart[index]) return;
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) cart.splice(index, 1);
+      saveCartToStorage();
+      updateCartUI();
+    }
+
+    function removeCartItem(index) {
+      if (!cart[index]) return;
+      cart.splice(index, 1);
+      saveCartToStorage();
+      updateCartUI();
+    }
+
     function updateCartUI() {
       const cartContainer = document.getElementById("cart-items");
       const cartCount = document.getElementById("cart-count");
@@ -809,41 +714,7 @@
       lucide.createIcons();
     }
 
-    async function proceedToCheckout() {
-      if (cart.length === 0) {
-        alert("Please add items to your cart before checking out.");
-        return;
-      }
-
-      const checkoutBtn = document.getElementById("checkout-btn");
-      checkoutBtn.innerText = "Connecting to Stripe...";
-      checkoutBtn.disabled = true;
-
-      try {
-        const response = await fetch('/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: cart })
-        });
-
-        const session = await response.json();
-        if (session.url) {
-          window.location.href = session.url;
-        } else {
-          alert("Error creating checkout session.");
-          checkoutBtn.innerText = "Proceed to Secure Checkout";
-          checkoutBtn.disabled = false;
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Backend not reachable.");
-        checkoutBtn.innerText = "Proceed to Secure Checkout";
-        checkoutBtn.disabled = false;
-      }
-    }
-
     renderProducts();
-    loadLiveStock();
     updateCartUI();
     lucide.createIcons();
   </script>
